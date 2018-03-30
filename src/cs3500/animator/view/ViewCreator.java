@@ -37,6 +37,9 @@ public class ViewCreator {
           new SVGView(model, tempo, output);
         }
         break;
+      case INTERACTIVE:
+        new InteractiveView(model, tempo);
+        break;
       default:
         throw new IllegalArgumentException("Invalid view type");
     }
@@ -46,6 +49,6 @@ public class ViewCreator {
    * An enumeration for the representation of different view types.
    */
   public enum ViewType {
-    TEXT, VISUAL, SVG, NULL
+    TEXT, VISUAL, SVG, INTERACTIVE, NULL
   }
 }

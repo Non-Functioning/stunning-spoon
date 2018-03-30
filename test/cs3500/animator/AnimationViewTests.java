@@ -10,6 +10,7 @@ import java.io.PrintStream;
 
 import cs3500.animator.model.SimpleAnimation;
 import cs3500.animator.view.AbstractView;
+import cs3500.animator.view.TextView;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -237,12 +238,12 @@ public class AnimationViewTests {
 
   @Test(expected = IllegalArgumentException.class)
   public void testAbstractExceptionZero() {
-    AbstractView av = new AbstractView(new SimpleAnimation(), 0);
+    AbstractView av = new TextView(new SimpleAnimation(), 0);//new AbstractView(new SimpleAnimation(), 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAbstractExceptionNeg() {
-    AbstractView av = new AbstractView(new SimpleAnimation(), -1);
+    AbstractView av = new TextView(new SimpleAnimation(), -1);//new AbstractView(new SimpleAnimation(), -1);
   }
 
   // Wrong shape type in text file.

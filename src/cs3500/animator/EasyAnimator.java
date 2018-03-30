@@ -86,6 +86,8 @@ public class EasyAnimator {
       case "svg":
         returnView = ViewCreator.ViewType.SVG;
         break;
+      case "interactive":
+        returnView = ViewCreator.ViewType.INTERACTIVE;
       default:
         throw new IllegalArgumentException("Invalid view type argument");
     }
