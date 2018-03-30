@@ -267,27 +267,4 @@ public class SimpleAnimationModelTests {
     anime.moveShape(anime.getShape(0), new Position2D(0, 0), 215, 230);
     anime.moveShape(anime.getShape(0), new Position2D(5, 5), 195, 220);
   }
-
-  @Test
-  public void createTest() {
-    SimpleAnimation anime = new SimpleAnimation();
-    List<Double> size = new ArrayList<>();
-    List<Double> newSize = new ArrayList<>();
-    for (int a = 0; a < 2; a++) {
-      size.add(50.0);
-      newSize.add(100.0);
-    }
-    anime.createShape("B", AnimatedShape.ShapeType.RECTANGLE, new RGB(0.0, 1.0, 0.5),
-            new Position2D(200, 200), size, 0, 130);
-    anime.changeShapeSize(anime.getShape(0), newSize, 50, 80);
-    anime.moveShape(anime.getShape(0), new Position2D(300, 300), 120, 125);
-    anime.changeShapeColor(anime.getShape(0), new RGB(1.0, 0.0, 0.25), 40, 49);
-    anime.moveShape(anime.getShape(0), new Position2D(100, 100), 1, 30);
-    String str = "";
-    for (int i = 0; i < 130; i++) {
-      str += anime.getTimeline().get(i).toString() + "\n";
-    }
-
-    assertEquals("Hello", str);
-  }
 }
