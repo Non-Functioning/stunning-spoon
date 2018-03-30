@@ -59,7 +59,7 @@ public class VisualView extends AbstractView {
   }
 
   /**
-   * Drawing a shape in the view.
+   * Draws a shape in the view.
    *
    * @param g Graphics class to utilise in drawing.
    */
@@ -90,27 +90,30 @@ public class VisualView extends AbstractView {
             String nextShape = "";
 
             shapeType.add(FINALJ, animationTime.get(FINALJ).getChangedShape().getShapeType());
-            singleAnimationChange(animationTime.get(FINALJ), FINALI, FINALJ);
+            singleAnimationChange(animationTime.get(FINALJ), FINALI);
+
+            int nextShapeCount = 1;
             if ((j + 1) < animationTime.size()) {
-              nextShape = animationTime.get(j + 1).getChangedShape().getShapeName();
+              nextShape = animationTime.get(j + nextShapeCount).getChangedShape().getShapeName();
             }
 
             if ((nextShape.equals(animationTime.get(j).getChangedShape().getShapeName()))) {
-            //  checkShapeParams(animationTime.get(FINALJ));
-            //}
-            //else {
+              //nextShapeCount++;
               while ((nextShape.equals(animationTime.get(j).getChangedShape().getShapeName()))) {
-                singleAnimationChange(animationTime.get(j + 1), FINALI, FINALJ);
-                j++;
-                if ((j + 1) < animationTime.size()) {
-                  nextShape = animationTime.get(j + 1).getChangedShape().getShapeName();
+                singleAnimationChange(animationTime.get(j + nextShapeCount), FINALI);
+                nextShapeCount++;
+                if ((j + nextShapeCount) < animationTime.size()) {
+                  nextShape = animationTime.get(j + nextShapeCount).getChangedShape().getShapeName();
                 }
                 else {
-                  nextShape = "";
+                  break;
                 }
               }
+              j += nextShapeCount;
+              //continue;
             }
-            checkShapeParams(animationTime.get(FINALJ));
+
+            checkShapeParams(animationTime.get(FINALJ), FINALI);
           }
           repaint();
         }
@@ -136,25 +139,27 @@ public class VisualView extends AbstractView {
     size = new ArrayList<>();
   }
 
-  private void checkShapeParams(Animations animation) {
+  private void checkShapeParams(Animations animation, int index) {
     int shapeCount = shapeType.size();
-    if (red.size() < shapeCount) {
-      red.add(animation.getColor1().getRed().floatValue());
-    }
-    if (green.size() < shapeCount) {
-      green.add(animation.getColor1().getGreen().floatValue());
-    }
-    if (blue.size() < shapeCount) {
-      blue.add(animation.getColor1().getBlue().floatValue());
-    }
-    if (xPosition.size() < shapeCount) {
-      xPosition.add(animation.getPosition1().getX().intValue());
-    }
-    if (yPosition.size() < shapeCount) {
-      yPosition.add(animation.getPosition1().getY().intValue());
-    }
-    if (size.size() < shapeCount) {
-      size.add(animation.getSizeParams1());
+    if (shapeCount <= timeline.get(index).size()) {
+      if (red.size() < shapeCount) {
+        red.add(animation.getColor1().getRed().floatValue());
+      }
+      if (green.size() < shapeCount) {
+        green.add(animation.getColor1().getGreen().floatValue());
+      }
+      if (blue.size() < shapeCount) {
+        blue.add(animation.getColor1().getBlue().floatValue());
+      }
+      if (xPosition.size() < shapeCount) {
+        xPosition.add(animation.getPosition1().getX().intValue());
+      }
+      if (yPosition.size() < shapeCount) {
+        yPosition.add(animation.getPosition1().getY().intValue());
+      }
+      if (size.size() < shapeCount) {
+        size.add(animation.getSizeParams1());
+      }
     }
   }
 
@@ -164,7 +169,7 @@ public class VisualView extends AbstractView {
    * @param animation animation to draw
    * @param time      time of draw
    */
-  private void singleAnimationChange(Animations animation, int time, int index) {
+  private void singleAnimationChange(Animations animation, int time) {
     switch (animation.getType()) {
       case MOVE:
         xPosition.add(calcTweening(animation.getPosition1().getX(),
@@ -194,7 +199,9 @@ public class VisualView extends AbstractView {
                 time).floatValue());
         break;
       case APPEAR:
+        break;
       case DISAPPEAR:
+        break;
       case STILL:
         addAppearOrStillShape(animation, time);
         break;
