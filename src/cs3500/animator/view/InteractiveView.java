@@ -7,6 +7,15 @@ import javax.swing.*;
 import cs3500.animator.model.SimpleAnimationModel;
 
 public class InteractiveView extends AbstractVisualView {
+  private JPanel buttonPane;
+  private JButton start;
+  private JButton pause;
+  private JButton resume;
+  private JButton restart;
+  private JButton loopEn;
+  private JButton upTempo;
+  private JButton downTempo;
+
   /**
    * Constructor for an abstract view.
    *
@@ -27,6 +36,25 @@ public class InteractiveView extends AbstractVisualView {
     getContentPane().add(horizonScroll, BorderLayout.SOUTH);
     JScrollBar verticalScroll = new JScrollBar(JScrollBar.VERTICAL);
     getContentPane().add(verticalScroll, BorderLayout.EAST);
+
+    buttonPane = new JPanel();
+    buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+    buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+
+    start = new JButton("Start");
+    //start.addActionListener(???);
+    buttonPane.add(start);
+    pause = new JButton("Pause");
+    //pause.addActionListener(???);
+    buttonPane.add(pause);
+    resume = new JButton("Resume");
+    //resume.addActionListener(???);
+    buttonPane.add(resume);
+    restart = new JButton("Restart");
+    //restart.addActionListener(???);
+    buttonPane.add(restart);
+
+    add(buttonPane, BorderLayout.NORTH); 
 
     animationPeriod = (long) (timeline.size()) * 100;
     startVisual();
