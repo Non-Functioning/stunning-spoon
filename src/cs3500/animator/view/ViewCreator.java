@@ -2,6 +2,7 @@ package cs3500.animator.view;
 
 import java.io.IOException;
 
+import cs3500.animator.controller.Controller;
 import cs3500.animator.model.SimpleAnimationModel;
 
 /**
@@ -38,7 +39,8 @@ public class ViewCreator {
         }
         break;
       case INTERACTIVE:
-        new InteractiveView(model, tempo);
+        ViewInterface view = new InteractiveView(model, tempo);
+        new Controller(model, view);
         break;
       default:
         throw new IllegalArgumentException("Invalid view type");

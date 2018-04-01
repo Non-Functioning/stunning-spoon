@@ -37,4 +37,14 @@ public abstract class AbstractView extends JFrame implements ViewInterface {
       throw new IllegalArgumentException("The tempo cannot be equal to or fall below 0");
     }
   }
+
+  @Override
+  public double getTempo() {
+    return tempo;
+  }
+
+  @Override
+  public void setTempo(double tempo) {
+    this.tempo = tempo;
+  }
 }

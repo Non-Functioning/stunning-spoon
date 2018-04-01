@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
+import cs3500.animator.controller.IController;
 import cs3500.animator.model.SimpleAnimationModel;
 
 /**
@@ -32,11 +33,14 @@ public class VisualView extends AbstractVisualView {
     getContentPane().add(horizonScroll, BorderLayout.SOUTH);
     JScrollBar verticalScroll = new JScrollBar(JScrollBar.VERTICAL);
     getContentPane().add(verticalScroll, BorderLayout.EAST);
-
-    animationPeriod = (long) (timeline.size()) * 100;
     startVisual();
 
     pack();
     setVisible(true);
+  }
+
+  @Override
+  public void setListener(IController listener) {
+    throw new UnsupportedOperationException("This view does not support listeners.");
   }
 }

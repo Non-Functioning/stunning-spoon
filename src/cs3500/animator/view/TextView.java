@@ -3,6 +3,7 @@ package cs3500.animator.view;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import cs3500.animator.controller.IController;
 import cs3500.animator.model.AnimatedShape;
 import cs3500.animator.model.Animations;
 import cs3500.animator.model.SimpleAnimationModel;
@@ -143,5 +144,15 @@ public class TextView extends AbstractView {
         break;
     }
     return newString.toString();
+  }
+
+  @Override
+  public void setListener(IController listener) {
+    throw new UnsupportedOperationException("This view does not support listeners.");
+  }
+
+  @Override
+  public void startVisual() {
+    throw new UnsupportedOperationException("This view does not support visual views.");
   }
 }

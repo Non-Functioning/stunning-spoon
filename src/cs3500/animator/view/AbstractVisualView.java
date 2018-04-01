@@ -27,6 +27,7 @@ public abstract class AbstractVisualView extends AbstractView {
    */
   public AbstractVisualView(SimpleAnimationModel animationModel, double tempo) {
     super(animationModel, tempo);
+    animationPeriod = (long) (timeline.size()) * 100;
   }
 
   /**
@@ -46,7 +47,8 @@ public abstract class AbstractVisualView extends AbstractView {
    * The method creates a task based on the timeline and the animations within the
    * timeline.
    */
-  protected void startVisual() {
+  @Override
+  public void startVisual() {
     TimerTask task;
 
     for (int i = 0; i < timeline.size(); i++) {
