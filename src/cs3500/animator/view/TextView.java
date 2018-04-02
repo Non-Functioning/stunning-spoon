@@ -155,4 +155,9 @@ public class TextView extends AbstractView {
   public void startVisual() {
     throw new UnsupportedOperationException("This view does not support visual views.");
   }
+
+  @Override
+  public void loopAnimation() {
+    throw new UnsupportedOperationException("This view does not support animation looping.");
+  }
 }

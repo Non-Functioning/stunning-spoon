@@ -19,6 +19,7 @@ public abstract class AbstractView extends JFrame implements ViewInterface {
   protected List<Animations> animations;
   protected List<List<Animations>> timeline;
   protected double tempo;
+  protected boolean isLooped;
 
   /**
    * Constructor for an abstract view.
@@ -33,7 +34,8 @@ public abstract class AbstractView extends JFrame implements ViewInterface {
 
     if (tempo > 0) {
       this.tempo = tempo;
-    } else {
+    }
+    else {
       throw new IllegalArgumentException("The tempo cannot be equal to or fall below 0");
     }
   }
@@ -46,5 +48,10 @@ public abstract class AbstractView extends JFrame implements ViewInterface {
   @Override
   public void setTempo(double tempo) {
     this.tempo = tempo;
+  }
+
+  @Override
+  public void setLooped(boolean is) {
+    this.isLooped = is;
   }
 }

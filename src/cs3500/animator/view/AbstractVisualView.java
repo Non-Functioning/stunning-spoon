@@ -3,6 +3,7 @@ package cs3500.animator.view;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import cs3500.animator.model.AnimatedShape;
@@ -17,7 +18,9 @@ public abstract class AbstractVisualView extends AbstractView {
   private List<Integer> xPosition;
   private List<Integer> yPosition;
   private List<List<Double>> size;
-  protected Long animationPeriod;
+  private Long animationPeriod;
+  private Timer timer;
+  private int tick;
 
   /**
    * Constructor for an abstract view.
@@ -27,7 +30,10 @@ public abstract class AbstractVisualView extends AbstractView {
    */
   public AbstractVisualView(SimpleAnimationModel animationModel, double tempo) {
     super(animationModel, tempo);
+    timer = new Timer();
     animationPeriod = (long) (timeline.size()) * 100;
+    isLooped = false;
+    tick = 0;
   }
 
   /**
@@ -52,19 +58,20 @@ public abstract class AbstractVisualView extends AbstractView {
     TimerTask task;
 
     for (int i = 0; i < timeline.size(); i++) {
-      final int FINALI = i;
-      java.util.List<Animations> animationTime = timeline.get(i);
+      final int FINALI = tick;
+      java.util.List<Animations> animationTime = timeline.get(FINALI);
       task = new TimerTask() {
         @Override
         public void run() {
           initializeParams();
           addShapeParamsAtTimeT(animationTime, FINALI);
           repaint();
+
         }
       };
-
-      java.util.Timer timer = new java.util.Timer();
-      timer.scheduleAtFixedRate(task, (long) ((FINALI / tempo) * 1000), animationPeriod);
+      tick = (tick + 1) % timeline.size();
+      //Timer timer = new java.util.Timer();
+      scheduleTimerTasks(task, FINALI);
     }
   }
 
@@ -234,5 +241,27 @@ public abstract class AbstractVisualView extends AbstractView {
     if (size.size() < shapeCount) {
       size.add(animation.getSizeParams1());
     }
+  }
+
+  private void scheduleTimerTasks(TimerTask task, int tock) {
+    if (isLooped) {
+      timer.scheduleAtFixedRate(task, (long) ((tock / tempo) * 1000), animationPeriod);
+    }
+    else {
+      timer.schedule(task, (long) ((tock / tempo) * 1000));
+    }
+  }
+
+  @Override
+  public void loopAnimation() {
+    if (isLooped) {
+      isLooped = false;
+    }
+    else {
+      isLooped = true;
+    }
+    timer.cancel();
+    timer = new Timer();
+    startVisual();
   }
 }

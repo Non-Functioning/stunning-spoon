@@ -31,6 +31,11 @@ public class Controller implements IController {
       case "pause":
         break;
       case "loop":
+        view.loopAnimation();
+        break;
+      case "add shape to subset":
+        break;
+      default:
         break;
     }
   }

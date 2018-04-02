@@ -16,5 +16,9 @@ public interface ViewInterface {
 
   double getTempo();
 
+  void setLooped(boolean is);
+
+  void loopAnimation();
+
   void startVisual();
 }

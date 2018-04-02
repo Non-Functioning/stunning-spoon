@@ -12,6 +12,7 @@ import cs3500.animator.model.SimpleAnimationModel;
 public class InteractiveView extends AbstractVisualView {
   private JPanel buttonPane;
   private JPanel mainButtonPanel;
+  private JPanel dropdownPanel;
   private JButton start;
   private JButton restart;
   private JButton upTempo;
@@ -19,6 +20,8 @@ public class InteractiveView extends AbstractVisualView {
   private JRadioButton pause;
   private JRadioButton loop;
   private JLabel tempoDisplay;
+  private JLabel dropdownDisplay;
+  private JComboBox<String> dropdown;
 
   /**
    * Constructor for an abstract view.
@@ -76,12 +79,28 @@ public class InteractiveView extends AbstractVisualView {
     loop.setActionCommand("loop");
     radioPanel.add(loop);
 
+    dropdownPanel = new JPanel();
+    dropdownPanel.setLayout(new BoxLayout(dropdownPanel, BoxLayout.PAGE_AXIS));
+    add(dropdownPanel, BorderLayout.SOUTH);
+
+    dropdownDisplay = new JLabel("Add shapes to new animation");
+    dropdownPanel.add(dropdownDisplay);
+    String[] shapes = {"Shape A", "Shape B", "Shape C"};
+    dropdown = new JComboBox<>();
+    dropdown.setActionCommand("add shape to subset");
+    for (int i = 0; i < shapes.length; i++) {
+      dropdown.addItem(shapes[i]);
+    }
+    dropdownPanel.add(dropdown);
+
     mainButtonPanel.add(radioPanel, FlowLayout.RIGHT);
     add(mainButtonPanel, BorderLayout.NORTH);
 
     pack();
     setVisible(true);
   }
+
+
 
   @Override
   public void setListener(IController listener) {
@@ -97,5 +116,6 @@ public class InteractiveView extends AbstractVisualView {
     downTempo.addActionListener(listen);
     pause.addActionListener(listen);
     loop.addActionListener(listen);
+    dropdown.addActionListener(listen);
   }
 }
