@@ -29,10 +29,20 @@ public class VisualView extends AbstractVisualView {
   }
 
   @Override
+  public void pauseAnimation() {
+    throw new UnsupportedOperationException("This view does not support pausing.");
+  }
+
+  @Override
   public void togglePlayOrPause() {
     throw new UnsupportedOperationException("This view does not support pausing.");
   }
 
+  /**
+   * This method is used to connect the controller(listener) to the Interactive view
+   * so that the user can interact with the view.
+   * @param listener  controller
+   */
   @Override
   public void setListener(IController listener) {
     throw new UnsupportedOperationException("This view does not support listeners.");
@@ -51,5 +61,15 @@ public class VisualView extends AbstractVisualView {
   @Override
   public void restartAnimation() {
     throw new UnsupportedOperationException("This view does not support animation restart.");
+  }
+
+  @Override
+  public void playSubset(SimpleAnimationModel model, int subsetStart) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
+  }
+
+  @Override
+  public void svgSubset(SimpleAnimationModel model, String fileName) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 }

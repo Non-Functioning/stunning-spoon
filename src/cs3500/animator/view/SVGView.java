@@ -219,6 +219,11 @@ public class SVGView extends AbstractView {
     }
   }
 
+  /**
+   * This method is used to connect the controller(listener) to the Interactive view
+   * so that the user can interact with the view.
+   * @param listener  controller
+   */
   @Override
   public void setListener(IController listener) {
     throw new UnsupportedOperationException("This view does not support listeners.");
@@ -257,5 +262,15 @@ public class SVGView extends AbstractView {
   @Override
   public void togglePlayOrPause() {
     throw new UnsupportedOperationException("This view does not support pausing.");
+  }
+
+  @Override
+  public void playSubset(SimpleAnimationModel model, int subsetStart) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
+  }
+
+  @Override
+  public void svgSubset(SimpleAnimationModel model, String fileName) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 }

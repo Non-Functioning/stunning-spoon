@@ -1,7 +1,6 @@
 package cs3500.animator.view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -24,10 +23,12 @@ public abstract class AbstractVisualView extends AbstractView {
   private Long animationPeriod;
   protected Timer timer;
   protected int currTick;
+  protected int subsetTick;
+  protected List<List<Animations>> subsetTimeline;
   protected boolean isPaused;
 
   protected JFrame frame;
-  private DrawingPane mainPanel;
+  protected DrawingPane mainPanel;
   private JScrollPane mainScrollPane;
 
   /**
@@ -43,36 +44,26 @@ public abstract class AbstractVisualView extends AbstractView {
     isLooped = false;
     isPaused = true;
     currTick = 0;
+    subsetTick = 0;
+    subsetTimeline = new ArrayList<>();
 
     frame = new JFrame("Simple Animation!");
     //frame.setSize(500, 500);
     frame.setLocation(200, 25);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(true);
-    frame.setMinimumSize(new Dimension(500, 500));
+    frame.setPreferredSize(new Dimension(700, 600));
     frame.setLayout(new BorderLayout());
     //frame.setVisible(true);
 
     mainPanel = new DrawingPane();
     mainScrollPane = new JScrollPane(mainPanel);
-    mainScrollPane.setPreferredSize(new Dimension(500, 500));
+    mainScrollPane.setPreferredSize(new Dimension(700, 600));
     frame.add(mainScrollPane, BorderLayout.CENTER);
     //frame.add(mainPanel, BorderLayout.CENTER);
 
     //frame.pack();
   }
-
-  /**
-   * Draws a shape in the view.
-   *
-   * @param g Graphics class to utilise in drawing.
-   */
-/*  public void paint(Graphics g) {
-    super.paint(g);
-    for (int i = 0; i < shapeType.size(); i++) {
-      drawShape(g, i);
-    }
-  }*/
 
   /**
    * This method schedules all the tasks required each tick to draw an animation.
@@ -85,27 +76,28 @@ public abstract class AbstractVisualView extends AbstractView {
     currTick = startTime;
 
     for (int i = 0; i < timeline.size(); i++) {
+
       final int FINALI = currTick;
-      //int offset = (i + tic) % timeline.size();
       List<Animations> animationTime = timeline.get(FINALI);
       task = new TimerTask() {
         @Override
         public void run() {
           initializeParams();
           addShapeParamsAtTimeT(animationTime, FINALI);
-          //mainPanel.paintComponent(mainPanel.getGraphics());
           mainPanel.repaint();
           currTick = (currTick + 1) % timeline.size();
         }
       };
-      currTick = (currTick + 1) % timeline.size();
-      //Timer timer = new java.util.Timer();
-      //tick = FINALI;
       scheduleTimerTasks(task, i);
+      if ((currTick == (timeline.size() - 1)) & (!isLooped)) {
+        currTick = (currTick + 1) % timeline.size();
+        break;
+      }
+      currTick = (currTick + 1) % timeline.size();
     }
   }
 
-  private void initializeParams() {
+  protected void initializeParams() {
     red = new ArrayList<>();
     green = new ArrayList<>();
     blue = new ArrayList<>();
@@ -227,7 +219,7 @@ public abstract class AbstractVisualView extends AbstractView {
     return (initVal * v1) + (finalVal * v2);
   }
 
-  private void addShapeParamsAtTimeT(List<Animations> animationTime, int timelineIndex) {
+  protected void addShapeParamsAtTimeT(List<Animations> animationTime, int timelineIndex) {
     for (int j = 0; j < timeline.get(timelineIndex).size(); j++) {
       String nextShape = "";
 
@@ -273,43 +265,16 @@ public abstract class AbstractVisualView extends AbstractView {
     }
   }
 
-  private void scheduleTimerTasks(TimerTask task, int time) {
+  protected void scheduleTimerTasks(TimerTask task, int time) {
     if (isLooped) {
       timer.scheduleAtFixedRate(task, (long) ((time / tempo) * 1000), animationPeriod);
     }
     else {
       timer.schedule(task, (long) ((time / tempo) * 1000));
     }
-
   }
 
-  @Override
-  public void pauseAnimation() {
-    if(isPaused) {
-      startAnimation(currTick);
-    }
-    else {
-      timer.cancel();
-      timer = new Timer();
-
-      TimerTask task;
-      final int finalTick = currTick;
-      List<Animations> animationTime = timeline.get(finalTick);
-      task = new TimerTask() {
-        @Override
-        public void run() {
-          initializeParams();
-          addShapeParamsAtTimeT(animationTime, finalTick);
-          mainPanel.repaint();
-        }
-      };
-
-      scheduleTimerTasks(task, currTick);
-      isPaused = true;
-    }
-  }
-
-  private class DrawingPane extends JPanel {
+  protected class DrawingPane extends JPanel {
     private DrawingPane() {
       setLayout(new BorderLayout());
     }

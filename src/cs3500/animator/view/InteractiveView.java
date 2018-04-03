@@ -25,6 +25,8 @@ public class InteractiveView extends AbstractVisualView {
   private JLabel tempoDisplay;
   private JLabel dropdownDisplay;
   private JComboBox<String> dropdown;
+  private JButton playSubset;
+  private JButton svgSubset;
 
   /**
    * Constructor for an abstract view.
@@ -66,10 +68,10 @@ public class InteractiveView extends AbstractVisualView {
     loop = new JRadioButton("Enable Looping");
     loop.setActionCommand("loop");
     radioPanel.add(loop);
+    mainButtonPanel.add(radioPanel, FlowLayout.RIGHT);
 
     subsetPanel = new JPanel();
     subsetPanel.setLayout(new FlowLayout());
-    frame.add(subsetPanel, BorderLayout.SOUTH);
 
     dropdownDisplay = new JLabel("Add shapes to new animation");
     subsetPanel.add(dropdownDisplay);
@@ -77,9 +79,15 @@ public class InteractiveView extends AbstractVisualView {
     dropdown.setActionCommand("add shape to subset");
     createShapeDropdown();
     subsetPanel.add(dropdown);
+    playSubset = new JButton("Play Subset");
+    playSubset.setActionCommand("play subset");
+    subsetPanel.add(playSubset);
+    svgSubset = new JButton("Export Subset to SVG");
+    svgSubset.setActionCommand("SVG subset");
+    subsetPanel.add(svgSubset);
 
-    mainButtonPanel.add(radioPanel, FlowLayout.RIGHT);
     frame.add(mainButtonPanel, BorderLayout.NORTH);
+    frame.add(subsetPanel, BorderLayout.SOUTH);
 
     frame.pack();
     frame.setVisible(true);
@@ -111,7 +119,12 @@ public class InteractiveView extends AbstractVisualView {
     tempoDisplay.setText("Tempo: " + tempo);
     timer.cancel();
     timer = new Timer();
-    startAnimation(currTick);
+    if (isPaused) {
+      pauseAnimation();
+    }
+    else {
+      startAnimation(currTick);
+    }
   }
 
   @Override
@@ -119,7 +132,12 @@ public class InteractiveView extends AbstractVisualView {
     isLooped = !isLooped;
     timer.cancel();
     timer = new Timer();
-    startAnimation(currTick);
+    if (isPaused) {
+      pauseAnimation();
+    }
+    else {
+      startAnimation(currTick);
+    }
   }
 
   @Override
@@ -131,9 +149,35 @@ public class InteractiveView extends AbstractVisualView {
     startAnimation(0);
   }
 
+
+  @Override
+  public void pauseAnimation() {
+    if(isPaused) {
+      startAnimation(currTick);
+    }
+    else {
+      timer.cancel();
+      timer = new Timer();
+
+      TimerTask task;
+      final int finalTick = currTick;
+      List<Animations> animationTime = timeline.get(finalTick);
+      task = new TimerTask() {
+        @Override
+        public void run() {
+          initializeParams();
+          addShapeParamsAtTimeT(animationTime, finalTick);
+          mainPanel.repaint();
+        }
+      };
+      scheduleTimerTasks(task, currTick);
+      isPaused = true;
+    }
+  }
+
   @Override
   public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
-    if (arg0.getSource() instanceof JComboBox) {
+    //if (arg0.getSource() instanceof JComboBox) {
       JComboBox<String> box = (JComboBox<String>) arg0.getSource();
       String item = (String) box.getSelectedItem();
       if (subset.getShapeByName(item.substring(6)) == null) {
@@ -148,10 +192,51 @@ public class InteractiveView extends AbstractVisualView {
       else {
         subset.removeShapeByName(item.substring(6));
         dropdownDisplay.setText("Removed from Subset: " + item);
-      }
+      //}
     }
   }
 
+  @Override
+  public void playSubset(SimpleAnimationModel model, int subsetStart) {
+    subsetTimeline = model.getTimeline();
+    subsetTick = subsetStart;
+
+    timer.cancel();
+    timer = new Timer();
+    TimerTask task;
+
+    for (int i = 0; i < subsetTimeline.size(); i++) {
+      final int FINALI = subsetTick;
+      List<Animations> animationTime = subsetTimeline.get(FINALI);
+      task = new TimerTask() {
+        @Override
+        public void run() {
+          initializeParams();
+          addShapeParamsAtTimeT(animationTime, FINALI);
+          mainPanel.repaint();
+          subsetTick = (subsetTick + 1) % subsetTimeline.size();
+        }
+      };
+      scheduleTimerTasks(task, i);
+      if ((subsetTick == (subsetTimeline.size() - 1)) & (!isLooped)) {
+        subsetTick = (subsetTick + 1) % subsetTimeline.size();
+        break;
+      }
+      subsetTick = (subsetTick + 1) % subsetTimeline.size();
+
+    }
+  }
+
+  @Override
+  public void svgSubset(SimpleAnimationModel model, String fileName) {
+
+  }
+
+  /**
+   * This method is used to connect the controller(listener) to the Interactive view
+   * so that the user can interact with the view.
+   * @param listener  controller
+   */
   @Override
   public void setListener(IController listener) {
     ActionListener listen = new ActionListener() {
@@ -166,5 +251,6 @@ public class InteractiveView extends AbstractVisualView {
     downTempo.addActionListener(listen);
     loop.addActionListener(listen);
     dropdown.addActionListener(listen);
+    playSubset.addActionListener(listen);
   }
 }

@@ -39,6 +39,13 @@ public class Controller implements IController {
       case "add shape to subset":
         view.addToSubset(e, subsetModel);
         break;
+      case "play subset":
+        view.playSubset(subsetModel, 0);
+        break;
+      case "SVG subset":
+        String out = "";
+        view.svgSubset(subsetModel, out);
+        break;
       default:
         throw new IllegalArgumentException("Invalid action command");
     }
