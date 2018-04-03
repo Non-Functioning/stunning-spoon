@@ -131,7 +131,8 @@ public class SVGView extends AbstractView {
         return "<rect id=\"" + shape.getShapeName() + "\" x=\"" + shape.getInitialPosition().getX()
                 + "\" y=\"" + shape.getInitialPosition().getY() + "\" width=\""
                 + shape.getInitialSize().get(0) + "\" height=\"" + shape.getInitialSize().get(1)
-                + "\" style=\"fill:RGB" + shape.getInitialColor().toStringSVG() + "\">"
+                + "\" style=\"fill:RGB" + shape.getInitialColor().toStringSVG() + " " +
+                " \" visibility=\"hidden\">"
                 + animateCommands
                 + "</rect>";
       case CIRCLE:
@@ -140,7 +141,7 @@ public class SVGView extends AbstractView {
                 + "\" cy=\"" + shape.getInitialPosition().getY() + "\" r=\""
                 + shape.getInitialSize().get(0) + "\" stroke=RGB\""
                 + shape.getInitialColor().toStringSVG()
-                + "\" />"
+                + "\" >"
                 + animateCommands
                 + "</circle>";
       case SQUARE:
@@ -154,7 +155,7 @@ public class SVGView extends AbstractView {
         return "<ellipse cx=\"" + shape.getInitialPosition().getX() + "\" cy=\""
                 + shape.getInitialPosition().getY() + "\" rx=\"" + shape.getInitialSize().get(0)
                 + "\" ry=\"" + shape.getInitialSize().get(1) + "\" style=\"fill:RGB"
-                + shape.getInitialColor().toStringSVG() + "\">"
+                + shape.getInitialColor().toStringSVG() + " \"  visibility=\"hidden\">"
                 + animateCommands
                 + "</ellipse>";
 
