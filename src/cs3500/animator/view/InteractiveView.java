@@ -25,6 +25,8 @@ public class InteractiveView extends AbstractVisualView {
   private JLabel tempoDisplay;
   private JLabel dropdownDisplay;
   private JComboBox<String> dropdown;
+  private JButton playSubset;
+  private JButton svgSubset;
 
   /**
    * Constructor for an abstract view.
@@ -66,10 +68,10 @@ public class InteractiveView extends AbstractVisualView {
     loop = new JRadioButton("Enable Looping");
     loop.setActionCommand("loop");
     radioPanel.add(loop);
+    mainButtonPanel.add(radioPanel, FlowLayout.RIGHT);
 
     subsetPanel = new JPanel();
     subsetPanel.setLayout(new FlowLayout());
-    frame.add(subsetPanel, BorderLayout.SOUTH);
 
     dropdownDisplay = new JLabel("Add shapes to new animation");
     subsetPanel.add(dropdownDisplay);
@@ -77,9 +79,15 @@ public class InteractiveView extends AbstractVisualView {
     dropdown.setActionCommand("add shape to subset");
     createShapeDropdown();
     subsetPanel.add(dropdown);
+    playSubset = new JButton("Play Subset");
+    playSubset.setActionCommand("play subset");
+    subsetPanel.add(playSubset);
+    svgSubset = new JButton("Export Subset to SVG");
+    svgSubset.setActionCommand("SVG subset");
+    subsetPanel.add(svgSubset);
 
-    mainButtonPanel.add(radioPanel, FlowLayout.RIGHT);
     frame.add(mainButtonPanel, BorderLayout.NORTH);
+    frame.add(subsetPanel, BorderLayout.SOUTH);
 
     frame.pack();
     frame.setVisible(true);
@@ -92,36 +100,64 @@ public class InteractiveView extends AbstractVisualView {
     }
   }
 
+  /**
+   * This method is only used by the Interactive view. It toggles the play/pause
+   * function and updates the view the state whether the animation can be played
+   * or paused
+   */
   public void togglePlayOrPause() {
     if (isPaused) {
       startAnimation(currTick);
       start.setText("Pause");
-      isPaused = false;
     }
     else {
       pauseAnimation();
       start.setText("Play");
-      isPaused = true;
     }
+    isPaused = !isPaused;
   }
 
+  /**
+   * This method is used only by the Interactive view. It assigns the tempo to the new
+   * given value, updates the the tempo shown in the view, and continues running or pausing
+   * the animation at the current tick.
+   * @param newTempo  new tempo
+   */
   @Override
   public void updateTempo(double newTempo) {
     tempo = newTempo;
     tempoDisplay.setText("Tempo: " + tempo);
     timer.cancel();
     timer = new Timer();
-    startAnimation(currTick);
+    if (isPaused) {
+      pauseAnimation();
+    }
+    else {
+      startAnimation(currTick);
+    }
   }
 
+  /**
+   * This method is only used by the Interactive view. It toggles the loop function of the
+   * animation and continues playing or pausing the animation.
+   */
   @Override
   public void loopAnimation() {
     isLooped = !isLooped;
     timer.cancel();
     timer = new Timer();
-    startAnimation(currTick);
+    if (isPaused) {
+      pauseAnimation();
+    }
+    else {
+      startAnimation(currTick);
+    }
   }
 
+  /**
+   * This method is only used by the Interactive view and restarts the animation from the
+   * beginning.
+   */
   @Override
   public void restartAnimation() {
     timer.cancel();
@@ -131,9 +167,45 @@ public class InteractiveView extends AbstractVisualView {
     startAnimation(0);
   }
 
+  /**
+   * This method is only used by the Interactive view. It toggles the pause function of the
+   * animation. When unpausing/playing, the animation continues playing from the tick it was
+   * paused at.
+   */
+  @Override
+  public void pauseAnimation() {
+    if(isPaused) {
+      startAnimation(currTick);
+    }
+    else {
+      timer.cancel();
+      timer = new Timer();
+
+      TimerTask task;
+      final int finalTick = currTick;
+      List<Animations> animationTime = timeline.get(finalTick);
+      task = new TimerTask() {
+        @Override
+        public void run() {
+          initializeParams();
+          addShapeParamsAtTimeT(animationTime, finalTick);
+          mainPanel.repaint();
+        }
+      };
+      scheduleTimerTasks(task, currTick);
+      isPaused = true;
+    }
+  }
+
+  /**
+   * This method is only used by the Interactive view. It adds a shape chosen by the user
+   * to the new subset model.
+   * @param arg0    action by user that includes shape
+   * @param subset  new subset model
+   */
   @Override
   public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
-    if (arg0.getSource() instanceof JComboBox) {
+    //if (arg0.getSource() instanceof JComboBox) {
       JComboBox<String> box = (JComboBox<String>) arg0.getSource();
       String item = (String) box.getSelectedItem();
       if (subset.getShapeByName(item.substring(6)) == null) {
@@ -148,10 +220,57 @@ public class InteractiveView extends AbstractVisualView {
       else {
         subset.removeShapeByName(item.substring(6));
         dropdownDisplay.setText("Removed from Subset: " + item);
-      }
+      //}
     }
   }
 
+  /**
+   * This method is only used by the Interactive view. It plays the subset animation
+   * from the given starting tick in the current window.
+   * @param model       subset model
+   * @param subsetStart starting tick
+   */
+  @Override
+  public void playSubset(SimpleAnimationModel model, int subsetStart) {
+    subsetTimeline = model.getTimeline();
+    subsetTick = subsetStart;
+
+    timer.cancel();
+    timer = new Timer();
+    TimerTask task;
+
+    for (int i = 0; i < subsetTimeline.size(); i++) {
+      final int FINALI = subsetTick;
+      List<Animations> animationTime = subsetTimeline.get(FINALI);
+      task = new TimerTask() {
+        @Override
+        public void run() {
+          initializeParams();
+          addShapeParamsAtTimeT(animationTime, FINALI);
+          mainPanel.repaint();
+          subsetTick = (subsetTick + 1) % subsetTimeline.size();
+        }
+      };
+      scheduleTimerTasks(task, i);
+      if ((subsetTick == (subsetTimeline.size() - 1)) & (!isLooped)) {
+        subsetTick = (subsetTick + 1) % subsetTimeline.size();
+        break;
+      }
+      subsetTick = (subsetTick + 1) % subsetTimeline.size();
+
+    }
+  }
+
+  @Override
+  public void svgSubset(SimpleAnimationModel model, String fileName) {
+
+  }
+
+  /**
+   * This method is used to connect the controller(listener) to the Interactive view
+   * so that the user can interact with the view.
+   * @param listener  controller
+   */
   @Override
   public void setListener(IController listener) {
     ActionListener listen = new ActionListener() {
@@ -166,5 +285,6 @@ public class InteractiveView extends AbstractVisualView {
     downTempo.addActionListener(listen);
     loop.addActionListener(listen);
     dropdown.addActionListener(listen);
+    playSubset.addActionListener(listen);
   }
 }
