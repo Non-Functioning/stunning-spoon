@@ -64,9 +64,12 @@ public class TextView extends AbstractView {
     }
 
     for (int i = 0; i < animations.size(); i++) {
-      animationString.append(animationToString(i));
-      if (i != (animations.size() - 1)) {
-        animationString.append("\n");
+      if (animations.get(i).type != Animations.AnimateTypes.APPEAR
+              && animations.get(i).type != Animations.AnimateTypes.DISAPPEAR) {
+        animationString.append(animationToString(i));
+        if (i != (animations.size() - 1)) {
+          animationString.append("\n");
+        }
       }
     }
     return shapesString.append(animationString).toString();
@@ -155,7 +158,8 @@ public class TextView extends AbstractView {
   /**
    * This method is used to connect the controller(listener) to the Interactive view
    * so that the user can interact with the view.
-   * @param listener  controller
+   *
+   * @param listener controller
    */
   @Override
   public void setListener(IController listener) {
@@ -167,7 +171,8 @@ public class TextView extends AbstractView {
    * animation starting from the given tick. This method schedules all the tasks required
    * each tick to draw an animation. The method creates a task based on the timeline and
    * the animations within the timeline.
-   * @param startTime   starting tick
+   *
+   * @param startTime starting tick
    */
   @Override
   public void startAnimation(int startTime) {
@@ -205,8 +210,9 @@ public class TextView extends AbstractView {
   /**
    * This method is only used by the Interactive view. It adds a shape chosen by the user
    * to the new subset model.
-   * @param arg0    action by user that includes shape
-   * @param subset  new subset model
+   *
+   * @param arg0   action by user that includes shape
+   * @param subset new subset model
    */
   @Override
   public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
@@ -217,7 +223,8 @@ public class TextView extends AbstractView {
    * This method is used only by the Interactive view. It assigns the tempo to the new
    * given value, updates the the tempo shown in the view, and continues running or pausing
    * the animation at the current tick.
-   * @param newTempo  new tempo
+   *
+   * @param newTempo new tempo
    */
   @Override
   public void updateTempo(double newTempo) {
@@ -237,6 +244,7 @@ public class TextView extends AbstractView {
   /**
    * This method is only used by the Interactive view. It plays the subset animation
    * from the given starting tick in the current window.
+   *
    * @param model       subset model
    * @param subsetStart starting tick
    */
