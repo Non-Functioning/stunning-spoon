@@ -106,8 +106,6 @@ public class Animations implements IAnimations {
         newString.append(time1);
         newString.append(" to t=");
         newString.append(time2);
-        newString.append(", Curr Position = " + position1 + " Curr Color = " + color1
-                + ", Curr Size = " + sizeParams1);
         break;
       case CHANGECOLOR:
         newString.append(" changes color from ");
@@ -118,8 +116,6 @@ public class Animations implements IAnimations {
         newString.append(time1);
         newString.append(" to t=");
         newString.append(time2);
-        newString.append(", Curr Position = " + position1 + " Curr Color = " + color1
-                + ", Curr Size = " + sizeParams1);
         break;
       case CHANGESIZE:
         newString.append(" scales from ");
@@ -142,8 +138,6 @@ public class Animations implements IAnimations {
       case STILL:
         newString.append(" is still at position ");
         newString.append(position1.toString());
-        newString.append(", Curr Position = " + position1 + " Curr Color = " + color1
-                + ", Curr Size = " + sizeParams1);
         break;
         
       default:

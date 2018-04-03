@@ -27,7 +27,7 @@ public final class Position2D {
 
   @Override
   public String toString() {
-    return String.format("(%f, %f)", this.x, this.y);
+    return String.format("(%.1f, %.1f)", this.x, this.y);
   }
 
   @Override

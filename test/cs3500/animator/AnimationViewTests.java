@@ -38,28 +38,24 @@ public class AnimationViewTests {
     assertEquals("Shapes:\n" +
             "Name: R\n" +
             "Type: rectangle\n" +
-            "Min-corner: (200.000000, 200.000000), Width: 50.0, Height: 100.0, Color: (1.000000," +
-            " 0.000000, 0.000000)\n" +
-            "Appears at t=0.5\n" +
-            "Disappears at t=50.0\n" +
+            "Min-corner: (200.0, 200.0), Width: 50.0, Height: 100.0, Color: (1.0, 0.0, 0.0)\n" +
+            "Appears at t=0.5s\n" +
+            "Disappears at t=50.0s\n" +
             "\n" +
             "Name: C\n" +
             "Type: oval\n" +
-            "Center: (500.000000, 100.000000), X radius: 60.0, Y radius: 30.0, Color: (0.000000," +
-            " 0.000000, 1.000000)\n" +
-            "Appears at t=3.0\n" +
-            "Disappears at t=50.0\n" +
+            "Center: (500.0, 100.0), X radius: 60.0, Y radius: 30.0, Color: (0.0, 0.0, 1.0)\n" +
+            "Appears at t=3.0s\n" +
+            "Disappears at t=50.0s\n" +
             "\n" +
-            "Shape R moves from (200.000000, 200.000000) to (300.000000, 300.000000) from t=5" +
-            ".0 to t=25.0\n" +
-            "Shape C moves from (500.000000, 100.000000) to (500.000000, 400.000000) from t=1" +
-            "0.0 to t=35.0\n" +
-            "Shape C changes color from (0.000000, 0.000000, 1.000000) to (0.000000, 1.000000" +
-            ", 0.000000) from t=25.0 to t=40.0\n" +
+            "Shape R moves from (200.0, 200.0) to (300.0, 300.0) from t=5.0s to t=25.0s\n" +
+            "Shape C moves from (500.0, 100.0) to (500.0, 400.0) from t=10.0s to t=35.0s\n" +
+            "Shape C changes color from (0.0, 0.0, 1.0) to (0.0, 1.0" +
+            ", 0.0) from t=25.0s to t=40.0s\n" +
             "Shape R scales from Width: 50.0, Height: 100.0 to Width: 25.0, Height: 100.0 fro" +
-            "m t=25.5 to t=35.0\n" +
-            "Shape R moves from (300.000000, 300.000000) to (200.000000, 200.000000) from t=3" +
-            "5.0 to t=50.0", outContent.toString());
+            "m t=25.5s to t=35.0s\n" +
+            "Shape R moves from (300.0, 300.0) to (200.0, 200.0) from t=35.0s to t=50.0s",
+            outContent.toString());
   }
 
   @Test
@@ -69,73 +65,49 @@ public class AnimationViewTests {
     assertEquals("Shapes:\n" +
             "Name: disk3\n" +
             "Type: rectangle\n" +
-            "Min-corner: (145.000000, 240.000000), Width: 110.0, Height: 30.0, Color: (0.044487," +
-            " 0.179378, 0.687518)\n" +
-            "Appears at t=0.05\n" +
-            "Disappears at t=15.1\n" +
+            "Min-corner: (145.0, 240.0), Width: 110.0, Height: 30.0, Color: (0.0, 0.2, 0.7)\n" +
+            "Appears at t=0.05s\n" +
+            "Disappears at t=15.1s\n" +
             "\n" +
             "Name: disk2\n" +
             "Type: rectangle\n" +
-            "Min-corner: (167.500000, 210.000000), Width: 65.0, Height: 30.0, Color: (0.025823, " +
-            "0.969198, 0.163931)\n" +
-            "Appears at t=0.05\n" +
-            "Disappears at t=15.1\n" +
+            "Min-corner: (167.5, 210.0), Width: 65.0, Height: 30.0, Color: (0.0, 1.0, 0.2)\n" +
+            "Appears at t=0.05s\n" +
+            "Disappears at t=15.1s\n" +
             "\n" +
             "Name: disk1\n" +
             "Type: rectangle\n" +
-            "Min-corner: (190.000000, 180.000000), Width: 20.0, Height: 30.0, Color: (0.001856," +
-            " 0.195475, 0.354671)\n" +
-            "Appears at t=0.05\n" +
-            "Disappears at t=15.1\n" +
+            "Min-corner: (190.0, 180.0), Width: 20.0, Height: 30.0, Color: (0.0, 0.2, 0.4)\n" +
+            "Appears at t=0.05s\n" +
+            "Disappears at t=15.1s\n" +
             "\n" +
-            "Shape disk1 moves from (190.000000, 180.000000) to (190.000000, 50.000000) " +
-            "from t=1.25 to t=1.75\n" +
-            "Shape disk1 moves from (190.000000, 50.000000) to (490.000000, 50.000000) f" +
-            "rom t=1.8 to t=2.3\n" +
-            "Shape disk1 moves from (490.000000, 50.000000) to (490.000000, 240.000000) " +
-            "from t=2.35 to t=2.85\n" +
-            "Shape disk2 moves from (167.500000, 210.000000) to (167.500000, 50.000000) " +
-            "from t=2.85 to t=3.35\n" +
-            "Shape disk2 moves from (167.500000, 50.000000) to (317.500000, 50.000000) f" +
-            "rom t=3.4 to t=3.9\n" +
-            "Shape disk2 moves from (317.500000, 50.000000) to (317.500000, 240.000000) " +
-            "from t=3.95 to t=4.45\n" +
-            "Shape disk1 moves from (490.000000, 240.000000) to (490.000000, 50.000000) " +
-            "from t=4.45 to t=4.95\n" +
-            "Shape disk1 moves from (490.000000, 50.000000) to (340.000000, 50.000000) f" +
-            "rom t=5.0 to t=5.5\n" +
-            "Shape disk1 moves from (340.000000, 50.000000) to (340.000000, 210.000000) " +
-            "from t=5.55 to t=6.05\n" +
-            "Shape disk3 moves from (145.000000, 240.000000) to (145.000000, 50.000000) " +
-            "from t=6.05 to t=6.55\n" +
-            "Shape disk3 moves from (145.000000, 50.000000) to (445.000000, 50.000000) f" +
-            "rom t=6.6 to t=7.1\n" +
-            "Shape disk3 moves from (445.000000, 50.000000) to (445.000000, 240.000000) " +
-            "from t=7.15 to t=7.65\n" +
-            "Shape disk1 moves from (340.000000, 210.000000) to (340.000000, 50.000000) " +
-            "from t=7.65 to t=8.15\n" +
-            "Shape disk3 changes color from (0.044487, 0.179378, 0.687518) to (0.000000," +
-            " 1.000000, 0.000000) from t=7.65 to t=8.05\n" +
-            "Shape disk1 moves from (340.000000, 50.000000) to (190.000000, 50.000000) f" +
-            "rom t=8.2 to t=8.7\n" +
-            "Shape disk1 moves from (190.000000, 50.000000) to (190.000000, 240.000000) " +
-            "from t=8.75 to t=9.25\n" +
-            "Shape disk2 moves from (317.500000, 240.000000) to (317.500000, 50.000000) " +
-            "from t=9.25 to t=9.75\n" +
-            "Shape disk2 moves from (317.500000, 50.000000) to (467.500000, 50.000000) f" +
-            "rom t=9.8 to t=10.3\n" +
-            "Shape disk2 moves from (467.500000, 50.000000) to (467.500000, 210.000000) " +
-            "from t=10.35 to t=10.85\n" +
-            "Shape disk1 moves from (190.000000, 240.000000) to (190.000000, 50.000000) " +
-            "from t=10.85 to t=11.35\n" +
-            "Shape disk2 changes color from (0.025823, 0.969198, 0.163931) to (0.000000," +
-            " 1.000000, 0.000000) from t=10.85 to t=11.25\n" +
-            "Shape disk1 moves from (190.000000, 50.000000) to (490.000000, 50.000000) f" +
-            "rom t=11.4 to t=11.9\n" +
-            "Shape disk1 moves from (490.000000, 50.000000) to (490.000000, 180.000000) " +
-            "from t=11.95 to t=12.45\n" +
-            "Shape disk1 changes color from (0.001856, 0.195475, 0.354671) to (0.000000," +
-            " 1.000000, 0.000000) from t=12.45 to t=12.85", outContent.toString());
+            "Shape disk1 moves from (190.0, 180.0) to (190.0, 50.0) from t=1.25s to t=1.75s\n" +
+            "Shape disk1 moves from (190.0, 50.0) to (490.0, 50.0) from t=1.8s to t=2.3s\n" +
+            "Shape disk1 moves from (490.0, 50.0) to (490.0, 240.0) from t=2.35s to t=2.85s\n" +
+            "Shape disk2 moves from (167.5, 210.0) to (167.5, 50.0) from t=2.85s to t=3.35s\n" +
+            "Shape disk2 moves from (167.5, 50.0) to (317.5, 50.0) from t=3.4s to t=3.9s\n" +
+            "Shape disk2 moves from (317.5, 50.0) to (317.5, 240.0) from t=3.95s to t=4.45s\n" +
+            "Shape disk1 moves from (490.0, 240.0) to (490.0, 50.0) from t=4.45s to t=4.95s\n" +
+            "Shape disk1 moves from (490.0, 50.0) to (340.0, 50.0) from t=5.0s to t=5.5s\n" +
+            "Shape disk1 moves from (340.0, 50.0) to (340.0, 210.0) from t=5.55s to t=6.05s\n" +
+            "Shape disk3 moves from (145.0, 240.0) to (145.0, 50.0) from t=6.05s to t=6.55s\n" +
+            "Shape disk3 moves from (145.0, 50.0) to (445.0, 50.0) from t=6.6s to t=7.1s\n" +
+            "Shape disk3 moves from (445.0, 50.0) to (445.0, 240.0) from t=7.15s to t=7.65s\n" +
+            "Shape disk1 moves from (340.0, 210.0) to (340.0, 50.0) from t=7.65s to t=8.15s\n" +
+            "Shape disk3 changes color from (0.0, 0.2, 0.7) to (0.0, 1.0, 0.0) from " +
+            "t=7.65s to t=8.05s\n" +
+            "Shape disk1 moves from (340.0, 50.0) to (190.0, 50.0) from t=8.2s to t=8.7s\n" +
+            "Shape disk1 moves from (190.0, 50.0) to (190.0, 240.0) from t=8.75s to t=9.25s\n" +
+            "Shape disk2 moves from (317.5, 240.0) to (317.5, 50.0) from t=9.25s to t=9.75s\n" +
+            "Shape disk2 moves from (317.5, 50.0) to (467.5, 50.0) from t=9.8s to t=10.3s\n" +
+            "Shape disk2 moves from (467.5, 50.0) to (467.5, 210.0) from t=10.35s to t=10.85s\n" +
+            "Shape disk1 moves from (190.0, 240.0) to (190.0, 50.0) from t=10.85s to t=11.35s\n" +
+            "Shape disk2 changes color from (0.0, 1.0, 0.2) to (0.0, 1.0, 0.0) " +
+            "from t=10.85s to t=11.25s\n" +
+            "Shape disk1 moves from (190.0, 50.0) to (490.0, 50.0) from t=11.4s to t=11.9s\n" +
+            "Shape disk1 moves from (490.0, 50.0) to (490.0, 180.0) from t=11.95s to t=12.45s\n" +
+            "Shape disk1 changes color from (0.0, 0.2, 0.4) to (0.0, 1.0, 0.0) from " +
+            "t=12.45s to t=12.85s", outContent.toString());
   }
 
   @Test

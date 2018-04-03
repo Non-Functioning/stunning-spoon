@@ -68,6 +68,27 @@ public class SimpleAnimation implements SimpleAnimationModel {
     }
   }
 
+  @Override
+  public void copyShape(AnimatedShape shape) {
+    createShape(shape.getShapeName(), shape.getShapeType(), shape.getInitialColor(),
+            shape.getInitialPosition(), shape.getInitialSize(), shape.getAppearTime(),
+            shape.getDisappearTime());
+  }
+
+  @Override
+  public void copyAnimation(Animations animate) {
+    if (getShapeByName(animate.getChangedShape().getShapeName()) != null) {
+      addNewAnimInTimeOrder(animate);
+      addNewAnimToTimeline(animate);
+      updateBeginAnimaPositions();
+      updateBeginAnimaColors();
+      updateBeginAnimaSizes();
+    }
+    else {
+      throw new IllegalArgumentException("Animation's shape does not exist in animation.");
+    }
+  }
+
   /**
    * Gets a shape from the shape List based on the index.
    * @param   shapeIndex  shape's index
@@ -77,6 +98,16 @@ public class SimpleAnimation implements SimpleAnimationModel {
   public AnimatedShape getShape(int shapeIndex) {
     AnimatedShape animatedShape = shapes.get(shapeIndex);
     return animatedShape;
+  }
+
+  @Override
+  public AnimatedShape getShapeByName(String name) {
+    for (int i = 0; i < shapes.size(); i++) {
+      if (shapes.get(i).getShapeName().equals(name)) {
+        return shapes.get(i);
+      }
+    }
+    return null;
   }
 
   @Override
@@ -266,6 +297,15 @@ public class SimpleAnimation implements SimpleAnimationModel {
     for (int i = 0; i < animations.size(); i++) {
       if (animations.get(i).getChangedShape().equals(tempShape)) {
         animations.remove(i);
+      }
+    }
+  }
+
+  @Override
+  public void removeShapeByName(String name) {
+    for (int i = 0; i < shapes.size(); i++) {
+      if (shapes.get(i).getShapeName().equals(name)) {
+        removeShape(i);
       }
     }
   }

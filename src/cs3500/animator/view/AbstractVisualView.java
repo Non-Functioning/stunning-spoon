@@ -1,6 +1,7 @@
 package cs3500.animator.view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -21,8 +22,9 @@ public abstract class AbstractVisualView extends AbstractView {
   private List<Integer> yPosition;
   private List<List<Double>> size;
   private Long animationPeriod;
-  private Timer timer;
-  private int tick;
+  protected Timer timer;
+  protected int currTick;
+  protected boolean isPaused;
 
   protected JFrame frame;
   private DrawingPane mainPanel;
@@ -39,16 +41,17 @@ public abstract class AbstractVisualView extends AbstractView {
     timer = new Timer();
     animationPeriod = (long) (timeline.size()) * 100;
     isLooped = false;
-    tick = 0;
+    isPaused = true;
+    currTick = 0;
 
-    frame = new JFrame();
-    frame.setSize(500, 500);
+    frame = new JFrame("Simple Animation!");
+    //frame.setSize(500, 500);
     frame.setLocation(200, 25);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(true);
     frame.setMinimumSize(new Dimension(500, 500));
     frame.setLayout(new BorderLayout());
-    frame.setVisible(true);
+    //frame.setVisible(true);
 
     mainPanel = new DrawingPane();
     mainScrollPane = new JScrollPane(mainPanel);
@@ -56,7 +59,7 @@ public abstract class AbstractVisualView extends AbstractView {
     frame.add(mainScrollPane, BorderLayout.CENTER);
     //frame.add(mainPanel, BorderLayout.CENTER);
 
-    frame.pack();
+    //frame.pack();
   }
 
   /**
@@ -77,12 +80,14 @@ public abstract class AbstractVisualView extends AbstractView {
    * timeline.
    */
   @Override
-  public void startAnimation() {
+  public void startAnimation(int startTime) {
     TimerTask task;
+    currTick = startTime;
 
     for (int i = 0; i < timeline.size(); i++) {
-      final int FINALI = tick;
-      java.util.List<Animations> animationTime = timeline.get(FINALI);
+      final int FINALI = currTick;
+      //int offset = (i + tic) % timeline.size();
+      List<Animations> animationTime = timeline.get(FINALI);
       task = new TimerTask() {
         @Override
         public void run() {
@@ -90,11 +95,13 @@ public abstract class AbstractVisualView extends AbstractView {
           addShapeParamsAtTimeT(animationTime, FINALI);
           //mainPanel.paintComponent(mainPanel.getGraphics());
           mainPanel.repaint();
+          currTick = (currTick + 1) % timeline.size();
         }
       };
-      tick = (tick + 1) % timeline.size();
+      currTick = (currTick + 1) % timeline.size();
       //Timer timer = new java.util.Timer();
-      scheduleTimerTasks(task, FINALI);
+      //tick = FINALI;
+      scheduleTimerTasks(task, i);
     }
   }
 
@@ -121,16 +128,16 @@ public abstract class AbstractVisualView extends AbstractView {
                 size.get(index).get(1).intValue());
         break;
       case OVAL:
-        g.fillOval(xPosition.get(index), yPosition.get(index), size.get(index).get(0).intValue(),
-                size.get(index).get(1).intValue());
+        g.fillOval(xPosition.get(index), yPosition.get(index),
+                (size.get(index).get(0).intValue() * 2), (size.get(index).get(1).intValue() * 2));
         break;
       case SQUARE:
         g.fillRect(xPosition.get(index), yPosition.get(index), size.get(index).get(0).intValue(),
                 size.get(index).get(0).intValue());
         break;
       case CIRCLE:
-        g.fillOval(xPosition.get(index), yPosition.get(index), size.get(index).get(0).intValue(),
-                size.get(index).get(0).intValue());
+        g.fillOval(xPosition.get(index), yPosition.get(index),
+                (size.get(index).get(0).intValue() * 2), (size.get(index).get(0).intValue() * 2));
         break;
       default:
         throw new IllegalArgumentException("Invalid shape type");
@@ -207,13 +214,13 @@ public abstract class AbstractVisualView extends AbstractView {
    * @param finalVal  final value
    * @param initTick  time of initial value
    * @param finalTick time of final value
-   * @param currTick  current time
+   * @param tick  current time
    * @return value at current time
    */
   private Double calcTweening(Double initVal, Double finalVal, Integer initTick,
-                              Integer finalTick, Integer currTick) {
-    Integer t1 = (finalTick - currTick);
-    Integer t2 = (currTick - initTick);
+                              Integer finalTick, Integer tick) {
+    Integer t1 = (finalTick - tick);
+    Integer t2 = (tick - initTick);
     Integer t3 = (finalTick - initTick);
     Double v1 = t1.doubleValue() / t3.doubleValue();
     Double v2 = t2.doubleValue() / t3.doubleValue();
@@ -266,42 +273,44 @@ public abstract class AbstractVisualView extends AbstractView {
     }
   }
 
-  private void scheduleTimerTasks(TimerTask task, int tock) {
+  private void scheduleTimerTasks(TimerTask task, int time) {
     if (isLooped) {
-      timer.scheduleAtFixedRate(task, (long) ((tock / tempo) * 1000), animationPeriod);
+      timer.scheduleAtFixedRate(task, (long) ((time / tempo) * 1000), animationPeriod);
     }
     else {
-      timer.schedule(task, (long) ((tock / tempo) * 1000));
+      timer.schedule(task, (long) ((time / tempo) * 1000));
     }
-  }
 
-  @Override
-  public void loopAnimation() {
-    if (isLooped) {
-      isLooped = false;
-    }
-    else {
-      isLooped = true;
-    }
-    timer.cancel();
-    timer = new Timer();
-    startAnimation();
-  }
-
-  @Override
-  public void restartAnimation() {
-    timer.cancel();
-    timer = new Timer();
-    startAnimation();
   }
 
   @Override
   public void pauseAnimation() {
+    if(isPaused) {
+      startAnimation(currTick);
+    }
+    else {
+      timer.cancel();
+      timer = new Timer();
 
+      TimerTask task;
+      final int finalTick = currTick;
+      List<Animations> animationTime = timeline.get(finalTick);
+      task = new TimerTask() {
+        @Override
+        public void run() {
+          initializeParams();
+          addShapeParamsAtTimeT(animationTime, finalTick);
+          mainPanel.repaint();
+        }
+      };
+
+      scheduleTimerTasks(task, currTick);
+      isPaused = true;
+    }
   }
 
-  public class DrawingPane extends JPanel {
-    public DrawingPane() {
+  private class DrawingPane extends JPanel {
+    private DrawingPane() {
       setLayout(new BorderLayout());
     }
 

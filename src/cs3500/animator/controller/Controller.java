@@ -1,5 +1,7 @@
 package cs3500.animator.controller;
 
+import java.awt.event.ActionEvent;
+
 import cs3500.animator.model.SimpleAnimation;
 import cs3500.animator.model.SimpleAnimationModel;
 import cs3500.animator.view.ViewInterface;
@@ -17,30 +19,28 @@ public class Controller implements IController {
   }
 
   @Override
-  public void action(String e) {
-    switch (e) {
+  public void action(ActionEvent e) {
+    switch (e.getActionCommand()) {
       case "start":
-        view.startAnimation();
+        view.togglePlayOrPause();
         break;
       case "restart":
         view.restartAnimation();
         break;
       case "increase tempo":
-        view.setTempo(view.getTempo() + 1);
+        view.updateTempo(view.getTempo() + 1);
         break;
       case "decrease tempo":
-        view.setTempo(view.getTempo() - 1);
-        break;
-      case "pause":
-        view.pauseAnimation();
+        view.updateTempo(view.getTempo() - 1);
         break;
       case "loop":
         view.loopAnimation();
         break;
       case "add shape to subset":
+        view.addToSubset(e, subsetModel);
         break;
       default:
-        break;
+        throw new IllegalArgumentException("Invalid action command");
     }
   }
 }

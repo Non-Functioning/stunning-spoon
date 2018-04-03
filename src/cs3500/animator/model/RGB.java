@@ -40,7 +40,7 @@ public class RGB {
 
   @Override
   public String toString() {
-    return String.format("(%f, %f, %f)", this.red, this.green, this.blue);
+    return String.format("(%.1f, %.1f, %.1f)", this.red, this.green, this.blue);
   }
 
   @Override

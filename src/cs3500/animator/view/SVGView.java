@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
@@ -224,7 +225,7 @@ public class SVGView extends AbstractView {
   }
 
   @Override
-  public void startAnimation() {
+  public void startAnimation(int startTime) {
     throw new UnsupportedOperationException("This view does not support visual views.");
   }
 
@@ -241,5 +242,20 @@ public class SVGView extends AbstractView {
   @Override
   public void pauseAnimation() {
     throw new UnsupportedOperationException("This view does not support animation pausing.");
+  }
+
+  @Override
+  public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
+  }
+
+  @Override
+  public void updateTempo(double newTempo) {
+    throw new UnsupportedOperationException("This view does not support tempo updates.");
+  }
+
+  @Override
+  public void togglePlayOrPause() {
+    throw new UnsupportedOperationException("This view does not support pausing.");
   }
 }

@@ -1,5 +1,7 @@
 package cs3500.animator.view;
 
+import java.awt.event.ActionEvent;
+
 import cs3500.animator.controller.IController;
 import cs3500.animator.model.SimpleAnimationModel;
 
@@ -16,11 +18,38 @@ public class VisualView extends AbstractVisualView {
    */
   public VisualView(SimpleAnimationModel animationModel, double tempo) {
     super(animationModel, tempo);
-    startAnimation();
+    startAnimation(0);
+    frame.pack();
+    frame.setVisible(true);
+  }
+
+  @Override
+  public void updateTempo(double newTempo) {
+    throw new UnsupportedOperationException("This view does not support tempo updates.");
+  }
+
+  @Override
+  public void togglePlayOrPause() {
+    throw new UnsupportedOperationException("This view does not support pausing.");
   }
 
   @Override
   public void setListener(IController listener) {
     throw new UnsupportedOperationException("This view does not support listeners.");
+  }
+
+  @Override
+  public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
+  }
+
+  @Override
+  public void loopAnimation() {
+    throw new UnsupportedOperationException("This view does not support animation looping.");
+  }
+
+  @Override
+  public void restartAnimation() {
+    throw new UnsupportedOperationException("This view does not support animation restart.");
   }
 }

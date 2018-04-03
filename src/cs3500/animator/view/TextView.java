@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
@@ -86,8 +87,8 @@ public class TextView extends AbstractView {
             + currentShape.sizeParamsToString(currentShape.getInitialSize()) + ", Color: "
             + currentShape.getInitialColor().toString()
             + "\nAppears at t=" + String.valueOf(currentShape.getAppearTime() / tempo)
-            + "\nDisappears at t="
-            + String.valueOf(currentShape.getDisappearTime() / tempo);
+            + "s\nDisappears at t="
+            + String.valueOf(currentShape.getDisappearTime() / tempo) + "s";
   }
 
   /**
@@ -109,8 +110,9 @@ public class TextView extends AbstractView {
         newString.append(currentAnimations.getPosition2().toString());
         newString.append(" from t=");
         newString.append(currentAnimations.getTime1() / tempo);
-        newString.append(" to t=");
+        newString.append("s to t=");
         newString.append(currentAnimations.getTime2() / tempo);
+        newString.append("s");
         break;
       case CHANGECOLOR:
         newString.append(" changes color from ");
@@ -119,8 +121,9 @@ public class TextView extends AbstractView {
         newString.append(currentAnimations.getColor2().toString());
         newString.append(" from t=");
         newString.append(currentAnimations.getTime1() / tempo);
-        newString.append(" to t=");
+        newString.append("s to t=");
         newString.append(currentAnimations.getTime2() / tempo);
+        newString.append("s");
         break;
       case CHANGESIZE:
         newString.append(" scales from ");
@@ -131,16 +134,19 @@ public class TextView extends AbstractView {
                 .getSizeParams2()));
         newString.append(" from t=");
         newString.append(currentAnimations.getTime1() / tempo);
-        newString.append(" to t=");
+        newString.append("s to t=");
         newString.append(currentAnimations.getTime2() / tempo);
+        newString.append("s");
         break;
       case APPEAR:
         newString.append(" appears at t=");
         newString.append(currentAnimations.getTime1() / tempo);
+        newString.append("s");
         break;
       default:
         newString.append(" disappears at t=");
         newString.append(currentAnimations.getTime1() / tempo);
+        newString.append("s");
         break;
     }
     return newString.toString();
@@ -152,7 +158,7 @@ public class TextView extends AbstractView {
   }
 
   @Override
-  public void startAnimation() {
+  public void startAnimation(int startTime) {
     throw new UnsupportedOperationException("This view does not support visual views.");
   }
 
@@ -169,5 +175,20 @@ public class TextView extends AbstractView {
   @Override
   public void pauseAnimation() {
     throw new UnsupportedOperationException("This view does not support animation pausing.");
+  }
+
+  @Override
+  public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
+  }
+
+  @Override
+  public void updateTempo(double newTempo) {
+    throw new UnsupportedOperationException("This view does not support tempo updates.");
+  }
+
+  @Override
+  public void togglePlayOrPause() {
+    throw new UnsupportedOperationException("This view does not support pausing.");
   }
 }

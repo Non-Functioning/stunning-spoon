@@ -1,6 +1,9 @@
 package cs3500.animator.view;
 
+import java.awt.event.ActionEvent;
+
 import cs3500.animator.controller.IController;
+import cs3500.animator.model.SimpleAnimationModel;
 
 /**
  * This is the interface for the view. All the views are created
@@ -14,6 +17,8 @@ public interface ViewInterface {
 
   void setTempo(double newTempo);
 
+  void updateTempo(double newTempo);
+
   double getTempo();
 
   void setLooped(boolean is);
@@ -24,5 +29,9 @@ public interface ViewInterface {
 
   void pauseAnimation();
 
-  void startAnimation();
+  void togglePlayOrPause();
+
+  void addToSubset(ActionEvent arg0, SimpleAnimationModel subset);
+
+  void startAnimation(int startTime);
 }

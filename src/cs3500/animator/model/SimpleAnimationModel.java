@@ -23,6 +23,10 @@ public interface SimpleAnimationModel {
   void createShape(String name, AnimatedShape.ShapeType type, RGB color1, Position2D initial,
                    List<Double> params, Integer time1, Integer time2);
 
+  void copyShape(AnimatedShape shape);
+
+  void copyAnimation(Animations animate);
+
   /**
    * Moves a specified shape to a different position at the specified
    * point in time.
@@ -73,6 +77,8 @@ public interface SimpleAnimationModel {
    */
   AnimatedShape getShape(int shapeIndex);
 
+  AnimatedShape getShapeByName(String name);
+
   List<AnimatedShape> getShapes();
 
   List<Animations> getAnimations();
@@ -114,6 +120,8 @@ public interface SimpleAnimationModel {
    * @param shapeIndex  shape index to be removed
    */
   void removeShape(int shapeIndex);
+
+  void removeShapeByName(String name);
 
   /**
    * Removes a specified animation from the List of animations.
