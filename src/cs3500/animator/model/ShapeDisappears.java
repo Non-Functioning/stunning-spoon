@@ -4,12 +4,8 @@ public class ShapeDisappears extends Animations {
   /**
    * Constructor for ShapeDisappears Animation. Takes in parameters that
    * define a shapeDisappears animation.
-   *
-   * UPDATED APRIL 3RD, 2018:
-   * Initialised time2.
-   *
-   * @param shape affected shape
-   * @param time1 time of disappearance
+   * @param shape   affected shape
+   * @param time1   time of disappearance
    */
   public ShapeDisappears(AnimatedShape shape, Integer time1) {
     this.type = AnimateTypes.DISAPPEAR;
@@ -18,6 +14,5 @@ public class ShapeDisappears extends Animations {
     this.color1 = shape.getInitialColor();
     this.sizeParams1 = shape.getInitialSize();
     this.time1 = time1;
-    this.time2 = time1;
   }
 }
