@@ -66,9 +66,11 @@ public abstract class AbstractVisualView extends AbstractView {
   }
 
   /**
-   * This method schedules all the tasks required each tick to draw an animation.
-   * The method creates a task based on the timeline and the animations within the
-   * timeline.
+   * This method is used by both the Visual and Interactive views. It plays an
+   * animation starting from the given tick. This method schedules all the tasks required
+   * each tick to draw an animation. The method creates a task based on the timeline and
+   * the animations within the timeline.
+   * @param startTime   starting tick
    */
   @Override
   public void startAnimation(int startTime) {

@@ -40,18 +40,21 @@ public abstract class AbstractView implements ViewInterface {
     }
   }
 
+  /**
+   * This returns the current tempo of the animation.
+   * @return current tempo
+   */
   @Override
   public double getTempo() {
     return tempo;
   }
 
+  /**
+   * This updates the tempo to the given values.
+   * @param tempo    new tempo
+   */
   @Override
   public void setTempo(double tempo) {
     this.tempo = tempo;
-  }
-
-  @Override
-  public void setLooped(boolean is) {
-    this.isLooped = is;
   }
 }

@@ -100,19 +100,29 @@ public class InteractiveView extends AbstractVisualView {
     }
   }
 
+  /**
+   * This method is only used by the Interactive view. It toggles the play/pause
+   * function and updates the view the state whether the animation can be played
+   * or paused
+   */
   public void togglePlayOrPause() {
     if (isPaused) {
       startAnimation(currTick);
       start.setText("Pause");
-      isPaused = false;
     }
     else {
       pauseAnimation();
       start.setText("Play");
-      isPaused = true;
     }
+    isPaused = !isPaused;
   }
 
+  /**
+   * This method is used only by the Interactive view. It assigns the tempo to the new
+   * given value, updates the the tempo shown in the view, and continues running or pausing
+   * the animation at the current tick.
+   * @param newTempo  new tempo
+   */
   @Override
   public void updateTempo(double newTempo) {
     tempo = newTempo;
@@ -127,6 +137,10 @@ public class InteractiveView extends AbstractVisualView {
     }
   }
 
+  /**
+   * This method is only used by the Interactive view. It toggles the loop function of the
+   * animation and continues playing or pausing the animation.
+   */
   @Override
   public void loopAnimation() {
     isLooped = !isLooped;
@@ -140,6 +154,10 @@ public class InteractiveView extends AbstractVisualView {
     }
   }
 
+  /**
+   * This method is only used by the Interactive view and restarts the animation from the
+   * beginning.
+   */
   @Override
   public void restartAnimation() {
     timer.cancel();
@@ -149,7 +167,11 @@ public class InteractiveView extends AbstractVisualView {
     startAnimation(0);
   }
 
-
+  /**
+   * This method is only used by the Interactive view. It toggles the pause function of the
+   * animation. When unpausing/playing, the animation continues playing from the tick it was
+   * paused at.
+   */
   @Override
   public void pauseAnimation() {
     if(isPaused) {
@@ -175,6 +197,12 @@ public class InteractiveView extends AbstractVisualView {
     }
   }
 
+  /**
+   * This method is only used by the Interactive view. It adds a shape chosen by the user
+   * to the new subset model.
+   * @param arg0    action by user that includes shape
+   * @param subset  new subset model
+   */
   @Override
   public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
     //if (arg0.getSource() instanceof JComboBox) {
@@ -196,6 +224,12 @@ public class InteractiveView extends AbstractVisualView {
     }
   }
 
+  /**
+   * This method is only used by the Interactive view. It plays the subset animation
+   * from the given starting tick in the current window.
+   * @param model       subset model
+   * @param subsetStart starting tick
+   */
   @Override
   public void playSubset(SimpleAnimationModel model, int subsetStart) {
     subsetTimeline = model.getTimeline();
