@@ -20,5 +20,9 @@ public interface ViewInterface {
 
   void loopAnimation();
 
-  void startVisual();
+  void restartAnimation();
+
+  void pauseAnimation();
+
+  void startAnimation();
 }

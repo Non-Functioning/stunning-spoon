@@ -224,12 +224,22 @@ public class SVGView extends AbstractView {
   }
 
   @Override
-  public void startVisual() {
+  public void startAnimation() {
     throw new UnsupportedOperationException("This view does not support visual views.");
   }
 
   @Override
   public void loopAnimation() {
     throw new UnsupportedOperationException("This view does not support animation looping.");
+  }
+
+  @Override
+  public void restartAnimation() {
+    throw new UnsupportedOperationException("This view does not support animation restart.");
+  }
+
+  @Override
+  public void pauseAnimation() {
+    throw new UnsupportedOperationException("This view does not support animation pausing.");
   }
 }

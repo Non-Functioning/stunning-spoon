@@ -32,18 +32,6 @@ public class InteractiveView extends AbstractVisualView {
   public InteractiveView(SimpleAnimationModel animationModel, double tempo) {
     super(animationModel, tempo);
 
-    setSize(500, 500);
-    setLocation(200, 25);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setResizable(true);
-    setMinimumSize(new Dimension(500, 500));
-    getContentPane().setLayout(new BorderLayout());
-
-    JScrollBar horizonScroll = new JScrollBar(JScrollBar.HORIZONTAL);
-    add(horizonScroll, BorderLayout.SOUTH);
-    JScrollBar verticalScroll = new JScrollBar(JScrollBar.VERTICAL);
-    add(verticalScroll, BorderLayout.EAST);
-
     mainButtonPanel = new JPanel();
     mainButtonPanel.setLayout(new FlowLayout());
 
@@ -81,25 +69,26 @@ public class InteractiveView extends AbstractVisualView {
 
     dropdownPanel = new JPanel();
     dropdownPanel.setLayout(new BoxLayout(dropdownPanel, BoxLayout.PAGE_AXIS));
-    add(dropdownPanel, BorderLayout.SOUTH);
+    frame.add(dropdownPanel, BorderLayout.SOUTH);
 
     dropdownDisplay = new JLabel("Add shapes to new animation");
     dropdownPanel.add(dropdownDisplay);
-    String[] shapes = {"Shape A", "Shape B", "Shape C"};
     dropdown = new JComboBox<>();
     dropdown.setActionCommand("add shape to subset");
-    for (int i = 0; i < shapes.length; i++) {
-      dropdown.addItem(shapes[i]);
-    }
+    createShapeDropdown();
     dropdownPanel.add(dropdown);
 
     mainButtonPanel.add(radioPanel, FlowLayout.RIGHT);
-    add(mainButtonPanel, BorderLayout.NORTH);
+    frame.add(mainButtonPanel, BorderLayout.NORTH);
 
-    pack();
-    setVisible(true);
+    frame.pack();
   }
 
+  private void createShapeDropdown() {
+    for (int i = 0; i < shapes.size(); i++) {
+      dropdown.addItem("Shape " + shapes.get(i).getShapeName() + " (" + shapes.get(i).getShapeType() + ")");
+    }
+  }
 
 
   @Override

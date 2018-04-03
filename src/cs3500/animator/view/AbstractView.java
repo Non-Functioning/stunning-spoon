@@ -13,7 +13,7 @@ import javax.swing.*;
  * and shared by all three view types. This class also extends the JFrame class
  * which is utilized by the visual view.
  */
-public abstract class AbstractView extends JFrame implements ViewInterface {
+public abstract class AbstractView implements ViewInterface {
   protected SimpleAnimationModel model;
   protected List<AnimatedShape> shapes;
   protected List<Animations> animations;

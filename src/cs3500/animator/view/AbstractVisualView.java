@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.*;
+
 import cs3500.animator.model.AnimatedShape;
 import cs3500.animator.model.Animations;
 import cs3500.animator.model.SimpleAnimationModel;
@@ -22,6 +24,10 @@ public abstract class AbstractVisualView extends AbstractView {
   private Timer timer;
   private int tick;
 
+  protected JFrame frame;
+  private DrawingPane mainPanel;
+  private JScrollPane mainScrollPane;
+
   /**
    * Constructor for an abstract view.
    *
@@ -34,6 +40,23 @@ public abstract class AbstractVisualView extends AbstractView {
     animationPeriod = (long) (timeline.size()) * 100;
     isLooped = false;
     tick = 0;
+
+    frame = new JFrame();
+    frame.setSize(500, 500);
+    frame.setLocation(200, 25);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setResizable(true);
+    frame.setMinimumSize(new Dimension(500, 500));
+    frame.setLayout(new BorderLayout());
+    frame.setVisible(true);
+
+    mainPanel = new DrawingPane();
+    mainScrollPane = new JScrollPane(mainPanel);
+    mainScrollPane.setPreferredSize(new Dimension(500, 500));
+    frame.add(mainScrollPane, BorderLayout.CENTER);
+    //frame.add(mainPanel, BorderLayout.CENTER);
+
+    frame.pack();
   }
 
   /**
@@ -41,12 +64,12 @@ public abstract class AbstractVisualView extends AbstractView {
    *
    * @param g Graphics class to utilise in drawing.
    */
-  public void paint(Graphics g) {
+/*  public void paint(Graphics g) {
     super.paint(g);
     for (int i = 0; i < shapeType.size(); i++) {
       drawShape(g, i);
     }
-  }
+  }*/
 
   /**
    * This method schedules all the tasks required each tick to draw an animation.
@@ -54,7 +77,7 @@ public abstract class AbstractVisualView extends AbstractView {
    * timeline.
    */
   @Override
-  public void startVisual() {
+  public void startAnimation() {
     TimerTask task;
 
     for (int i = 0; i < timeline.size(); i++) {
@@ -65,8 +88,8 @@ public abstract class AbstractVisualView extends AbstractView {
         public void run() {
           initializeParams();
           addShapeParamsAtTimeT(animationTime, FINALI);
-          repaint();
-
+          //mainPanel.paintComponent(mainPanel.getGraphics());
+          mainPanel.repaint();
         }
       };
       tick = (tick + 1) % timeline.size();
@@ -262,6 +285,37 @@ public abstract class AbstractVisualView extends AbstractView {
     }
     timer.cancel();
     timer = new Timer();
-    startVisual();
+    startAnimation();
+  }
+
+  @Override
+  public void restartAnimation() {
+    timer.cancel();
+    timer = new Timer();
+    startAnimation();
+  }
+
+  @Override
+  public void pauseAnimation() {
+
+  }
+
+  public class DrawingPane extends JPanel {
+    public DrawingPane() {
+      setLayout(new BorderLayout());
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+      return new Dimension(1000, 1000);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+      super.paintComponent(g);
+      for (int i = 0; i < shapeType.size(); i++) {
+        drawShape(g, i);
+      }
+    }
   }
 }
