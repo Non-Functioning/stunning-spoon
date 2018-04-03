@@ -2,6 +2,8 @@ package cs3500.animator.controller;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.*;
+
 import cs3500.animator.model.SimpleAnimation;
 import cs3500.animator.model.SimpleAnimationModel;
 import cs3500.animator.view.ViewInterface;
@@ -37,7 +39,11 @@ public class Controller implements IController {
         view.loopAnimation();
         break;
       case "add shape to subset":
-        view.addToSubset(e, subsetModel);
+        if (e.getSource() instanceof JComboBox) {
+          JComboBox<String> box = (JComboBox<String>) e.getSource();
+          String item = (String) box.getSelectedItem();
+          view.addToSubset(item, subsetModel);
+        }
         break;
       case "play subset":
         view.playSubset(subsetModel, 0);

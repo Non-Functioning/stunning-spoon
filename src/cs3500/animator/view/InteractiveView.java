@@ -200,27 +200,24 @@ public class InteractiveView extends AbstractVisualView {
   /**
    * This method is only used by the Interactive view. It adds a shape chosen by the user
    * to the new subset model.
-   * @param arg0    action by user that includes shape
+   * @param item    added shape's name
    * @param subset  new subset model
    */
   @Override
-  public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
-    //if (arg0.getSource() instanceof JComboBox) {
-      JComboBox<String> box = (JComboBox<String>) arg0.getSource();
-      String item = (String) box.getSelectedItem();
-      if (subset.getShapeByName(item.substring(6)) == null) {
-        subset.copyShape(model.getShapeByName(item.substring(6)));
-        for (int i = 0; i < animations.size(); i++) {
-          if (animations.get(i).getChangedShape().getShapeName().equals(item.substring(6))) {
-            subset.copyAnimation(animations.get(i));
-          }
+  public void addToSubset(String item, SimpleAnimationModel subset) {
+    String shapeName = item.split(" ")[1];
+    if (subset.getShapeByName(shapeName) == null) {
+      subset.copyShape(model.getShapeByName(shapeName));
+      dropdownDisplay.setText("Added to Subset: " + shapeName);
+      for (int i = 0; i < animations.size(); i++) {
+        if (animations.get(i).getChangedShape().getShapeName().equals(shapeName)) {
+          subset.copyAnimation(animations.get(i));
         }
-        dropdownDisplay.setText("Added to Subset: " + item);
       }
-      else {
-        subset.removeShapeByName(item.substring(6));
-        dropdownDisplay.setText("Removed from Subset: " + item);
-      //}
+    }
+    else {
+      subset.removeShapeByName(shapeName);
+      dropdownDisplay.setText("Removed from Subset: " + shapeName);
     }
   }
 
@@ -233,14 +230,14 @@ public class InteractiveView extends AbstractVisualView {
   @Override
   public void playSubset(SimpleAnimationModel model, int subsetStart) {
     subsetTimeline = model.getTimeline();
-    subsetTick = subsetStart;
+    //subsetTick = subsetStart;
 
     timer.cancel();
     timer = new Timer();
     TimerTask task;
 
     for (int i = 0; i < subsetTimeline.size(); i++) {
-      final int FINALI = subsetTick;
+      final int FINALI = i;//subsetTick;
       List<Animations> animationTime = subsetTimeline.get(FINALI);
       task = new TimerTask() {
         @Override
@@ -248,15 +245,15 @@ public class InteractiveView extends AbstractVisualView {
           initializeParams();
           addShapeParamsAtTimeT(animationTime, FINALI);
           mainPanel.repaint();
-          subsetTick = (subsetTick + 1) % subsetTimeline.size();
+          //subsetTick = (subsetTick + 1) % subsetTimeline.size();
         }
       };
       scheduleTimerTasks(task, i);
-      if ((subsetTick == (subsetTimeline.size() - 1)) & (!isLooped)) {
+      /*if ((subsetTick == (subsetTimeline.size() - 1)) & (!isLooped)) {
         subsetTick = (subsetTick + 1) % subsetTimeline.size();
         break;
-      }
-      subsetTick = (subsetTick + 1) % subsetTimeline.size();
+      }*/
+      //subsetTick = (subsetTick + 1) % subsetTimeline.size();
 
     }
   }

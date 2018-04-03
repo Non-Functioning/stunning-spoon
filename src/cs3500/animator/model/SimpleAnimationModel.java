@@ -116,11 +116,15 @@ public interface SimpleAnimationModel {
   List<Double> calcCurrSize(AnimatedShape shape, int time);
 
   /**
-   * Removes a specified shape from the animation.
+   * Removes a specified shape and its animations from the animation.
    * @param shapeIndex  shape index to be removed
    */
   void removeShape(int shapeIndex);
 
+  /**
+   * Removes a specified shape and its animations from the animation.
+   * @param name  shape name to be removed
+   */
   void removeShapeByName(String name);
 
   /**

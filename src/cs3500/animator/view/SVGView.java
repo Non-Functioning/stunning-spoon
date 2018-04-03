@@ -1,6 +1,5 @@
 package cs3500.animator.view;
 
-import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
@@ -272,11 +271,11 @@ public class SVGView extends AbstractView {
   /**
    * This method is only used by the Interactive view. It adds a shape chosen by the user
    * to the new subset model.
-   * @param arg0    action by user that includes shape
+   * @param shapeName    action by user that includes shape
    * @param subset  new subset model
    */
   @Override
-  public void addToSubset(ActionEvent arg0, SimpleAnimationModel subset) {
+  public void addToSubset(String shapeName, SimpleAnimationModel subset) {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 

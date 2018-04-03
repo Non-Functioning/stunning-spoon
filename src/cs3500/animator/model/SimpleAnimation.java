@@ -322,6 +322,10 @@ public class SimpleAnimation implements SimpleAnimationModel {
     }
   }
 
+  /**
+   * Removes a specified shape and its animations from the animation.
+   * @param name  shape name to be removed
+   */
   @Override
   public void removeShapeByName(String name) {
     for (int i = 0; i < shapes.size(); i++) {
