@@ -29,6 +29,11 @@ public class SimpleAnimation implements SimpleAnimationModel {
    * Creates a new AnimatedShape object holding the shape's parameters.
    * Then adds the shape to the List of shapes and adds its appearance and
    * disappearance into the timeline based on the time they occur.
+   *
+   * UPDATED APRIL 3RD, 2018:
+   * - Adds the Appear and Disappear animation.
+   * - Changed the adding to shapes list logic so it works with SVG.
+   *
    * @param name    shape name
    * @param type    shape type
    * @param color1  shape color
@@ -41,31 +46,41 @@ public class SimpleAnimation implements SimpleAnimationModel {
   public void createShape(String name, AnimatedShape.ShapeType type, RGB color1,
                           Position2D initial, List<Double> params, Integer time1, Integer time2) {
     AnimatedShape shape1 = new AnimatedShape(name, type, color1, initial, params, time1, time2);
-    int shapeCount = shapes.size();
+    /*int shapeCount = shapes.size();
     if (shapes.isEmpty()) {
       shapes.add(shape1);
-    }
-    else {
+    } else {
       for (int i = 0; i < shapeCount; i++) {
         if (shape1.getAppearTime() <= shapes.get(i).getAppearTime()) {
           shapes.add(i, shape1);
           break;
-        }
-        else if (i == (shapeCount - 1)) {
+        } else if (i == (shapeCount - 1)) {
           shapes.add(shape1);
         }
       }
-    }
+    }*/
+    shapes.add(shape1);
+
     if (timeline.size() < time2) {
       for (int i = timeline.size(); i <= time2; i++) {
         timeline.add(i, new ArrayList<>());
       }
     }
-    timeline.get(time1).add(new ShapeAppears(shape1, time1));
+    timeline.get(time1).add(new ShapeAppears(shape1, time1, time2));
     timeline.get(time2).add(new ShapeDisappears(shape1, time2));
     for (int i = (time1 + 1); i < time2; i++) {
       timeline.get(i).add(new StillShape(shape1, i));
     }
+
+    // ADDS IN THE APPEAR AND DISAPPEAR TIMES
+
+    addNewAnimInTimeOrder(new ShapeAppears(shape1, time1, time2));
+    addNewAnimToTimeline(new ShapeAppears(shape1, time1, time2));
+    addNewAnimInTimeOrder(new ShapeDisappears(shape1, time2));
+    addNewAnimToTimeline(new ShapeDisappears(shape1, time2));
+    updateBeginAnimaPositions();
+    updateBeginAnimaColors();
+    updateBeginAnimaSizes();
   }
 
   @Override
@@ -91,8 +106,9 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
   /**
    * Gets a shape from the shape List based on the index.
-   * @param   shapeIndex  shape's index
-   * @return              specified shape
+   *
+   * @param shapeIndex shape's index
+   * @return specified shape
    */
   @Override
   public AnimatedShape getShape(int shapeIndex) {
@@ -128,10 +144,11 @@ public class SimpleAnimation implements SimpleAnimationModel {
   /**
    * Creates a new move Animation based on the parameters. Tests if its a valid
    * move and then adds it to the List of Animations and the timeline.
-   * @param shape         shape to be moved
-   * @param newPosition   shape's new position
-   * @param time1         beginning time of move
-   * @param time2         end time of move
+   *
+   * @param shape       shape to be moved
+   * @param newPosition shape's new position
+   * @param time1       beginning time of move
+   * @param time2       end time of move
    */
   @Override
   public void moveShape(AnimatedShape shape, Position2D newPosition, Integer time1,
@@ -152,10 +169,11 @@ public class SimpleAnimation implements SimpleAnimationModel {
   /**
    * Creates a new changeColor Animation based on the parameters. Tests if its a valid
    * changeColor and then adds it to the List of Animations and the timeline.
-   * @param shape     shape to be changed
-   * @param newColor  shape's new color
-   * @param time1     beginning time of color change
-   * @param time2     end time of color change
+   *
+   * @param shape    shape to be changed
+   * @param newColor shape's new color
+   * @param time1    beginning time of color change
+   * @param time2    end time of color change
    */
   @Override
   public void changeShapeColor(AnimatedShape shape, RGB newColor, Integer time1,
@@ -176,10 +194,11 @@ public class SimpleAnimation implements SimpleAnimationModel {
   /**
    * Creates a new sizeChange Animation based on the parameters. Tests if its a valid
    * sizeChange and then adds it to the List of Animations and the timeline.
-   * @param shape           shape to be changed
-   * @param newSizeParams   shape's new size
-   * @param time1           beginning time of size change
-   * @param time2           end time of size change
+   *
+   * @param shape         shape to be changed
+   * @param newSizeParams shape's new size
+   * @param time1         beginning time of size change
+   * @param time2         end time of size change
    */
   @Override
   public void changeShapeSize(AnimatedShape shape, List<Double> newSizeParams, Integer time1,
@@ -200,7 +219,8 @@ public class SimpleAnimation implements SimpleAnimationModel {
   /**
    * Returns the String representation of the entire animation including
    * all shapes and Animations.
-   * @return    animation as a String
+   *
+   * @return animation as a String
    */
   @Override
   public String printAnimation() {
@@ -223,8 +243,9 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
   /**
    * Returns the String representation of a shape based on the shape's index.
-   * @param shapeIndex  shape's index
-   * @return            shape
+   *
+   * @param shapeIndex shape's index
+   * @return shape
    */
   @Override
   public String getShapeStatus(int shapeIndex) {
@@ -236,9 +257,10 @@ public class SimpleAnimation implements SimpleAnimationModel {
    * occuring to a specified shape at a specified time.
    * The time does not have to be the beginning or the end of the Animation,
    * it can be at any point between the two.
-   * @param shape   shape being animated
-   * @param type    animation type
-   * @param time    time of animation
+   *
+   * @param shape shape being animated
+   * @param type  animation type
+   * @param time  time of animation
    */
   @Override
   public void removeAnimation(AnimatedShape shape, Animations.AnimateTypes type, Integer time) {
@@ -281,7 +303,8 @@ public class SimpleAnimation implements SimpleAnimationModel {
   /**
    * Removes a shape at the specified shapeIndex and all related Animations
    * from the animations and timeline Lists.
-   * @param shapeIndex  shape index to be removed
+   *
+   * @param shapeIndex shape index to be removed
    */
   @Override
   public void removeShape(int shapeIndex) {
@@ -314,9 +337,10 @@ public class SimpleAnimation implements SimpleAnimationModel {
    * This method calculates a shape's position at a given time. If a shape is
    * moving at the given time, then this method will return the new position the
    * shape is moving to.
-   * @param shape   shape
-   * @param time    time of position
-   * @return        shape's Position2D at time
+   *
+   * @param shape shape
+   * @param time  time of position
+   * @return shape's Position2D at time
    */
   @Override
   public Position2D calcCurrPosition(AnimatedShape shape, int time) {
@@ -335,9 +359,10 @@ public class SimpleAnimation implements SimpleAnimationModel {
    * This method calculates a shape's color at a given time. If a shape is
    * changing color at the given time, then this method will return the new
    * color the shape is changing to.
-   * @param shape   shape
-   * @param time    time of color
-   * @return        shape's RGB at time
+   *
+   * @param shape shape
+   * @param time  time of color
+   * @return shape's RGB at time
    */
   @Override
   public RGB calcCurrColor(AnimatedShape shape, int time) {
@@ -356,9 +381,10 @@ public class SimpleAnimation implements SimpleAnimationModel {
    * This method calculates a shape's size at a given time. If a shape is
    * changing size at the given time, then this method will return the new
    * size the shape is changing to.
-   * @param shape   shape
-   * @param time    time of size
-   * @return        shape's size at time
+   *
+   * @param shape shape
+   * @param time  time of size
+   * @return shape's size at time
    */
   @Override
   public List<Double> calcCurrSize(AnimatedShape shape, int time) {
@@ -377,8 +403,9 @@ public class SimpleAnimation implements SimpleAnimationModel {
    * Checks if the given Animation is valid and that it does not overlap
    * with another Animation of the same type occurring at the same time on
    * the same shape.
-   * @param animate   Animation to validate
-   * @return          true, if Animation is valid
+   *
+   * @param animate Animation to validate
+   * @return true, if Animation is valid
    */
   private boolean isValidAnimation(Animations animate) {
     for (int i = animate.getTime1(); i <= animate.getTime2(); i++) {
@@ -394,19 +421,18 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
   /**
    * Adds an Animation to the animations List in the order of beginning time.
-   * @param obj   Animation to add
+   *
+   * @param obj Animation to add
    */
   private void addNewAnimInTimeOrder(Animations obj) {
     if (animations.isEmpty()) {
       animations.add(obj);
-    }
-    else {
+    } else {
       for (int i = 0; i < animations.size(); i++) {
         if (obj.getTime1() <= animations.get(i).getTime1()) {
           animations.add(i, obj);
           break;
-        }
-        else if (i == (animations.size() - 1)) {
+        } else if (i == (animations.size() - 1)) {
           animations.add(obj);
           break;
         }
@@ -417,7 +443,8 @@ public class SimpleAnimation implements SimpleAnimationModel {
   /**
    * Adds an Animation to the timeline List at all time instances
    * that the Animation occurs during.
-   * @param obj   Animation to add
+   *
+   * @param obj Animation to add
    */
   private void addNewAnimToTimeline(Animations obj) {
     for (int i = obj.getTime1(); i <= obj.getTime2(); i++) {
@@ -429,15 +456,13 @@ public class SimpleAnimation implements SimpleAnimationModel {
       }
       if (timeline.get(i).isEmpty()) {
         timeline.get(i).add(obj);
-      }
-      else {
+      } else {
         for (int j = 0; j < timeline.get(i).size(); j++) {
           if (obj.getChangedShape().getShapeName().compareTo(timeline.get(i).get(j).
                   getChangedShape().getShapeName()) <= 0) {
             timeline.get(i).add(j, obj);
             break;
-          }
-          else if (j == (timeline.get(i).size()) - 1) {
+          } else if (j == (timeline.get(i).size()) - 1) {
             timeline.get(i).add(obj);
             break;
           }
@@ -574,6 +599,7 @@ public class SimpleAnimation implements SimpleAnimationModel {
       params.add((double) yRadius);
       this.model.createShape(name, AnimatedShape.ShapeType.OVAL, new RGB(red, green, blue),
               new Position2D(cx, cy), params, startOfLife, endOfLife);
+      // ADD THE APPEAR AND DISAPPEAR TIMES HERE.
       return this;
     }
 
