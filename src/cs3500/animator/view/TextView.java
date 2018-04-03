@@ -1,5 +1,6 @@
 package cs3500.animator.view;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
@@ -63,9 +64,12 @@ public class TextView extends AbstractView {
     }
 
     for (int i = 0; i < animations.size(); i++) {
-      animationString.append(animationToString(i));
-      if (i != (animations.size() - 1)) {
-        animationString.append("\n");
+      if (animations.get(i).type != Animations.AnimateTypes.APPEAR
+              && animations.get(i).type != Animations.AnimateTypes.DISAPPEAR) {
+        animationString.append(animationToString(i));
+        if (i != (animations.size() - 1)) {
+          animationString.append("\n");
+        }
       }
     }
     return shapesString.append(animationString).toString();

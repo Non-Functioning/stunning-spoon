@@ -96,8 +96,7 @@ public class SimpleAnimation implements SimpleAnimationModel {
       updateBeginAnimaPositions();
       updateBeginAnimaColors();
       updateBeginAnimaSizes();
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Animation's shape does not exist in animation.");
     }
   }
@@ -231,9 +230,12 @@ public class SimpleAnimation implements SimpleAnimationModel {
     }
 
     for (int i = 0; i < animations.size(); i++) {
-      animationString.append(animations.get(i).toString());
-      if (i != (animations.size() - 1)) {
-        animationString.append("\n");
+      if (animations.get(i).type != Animations.AnimateTypes.APPEAR
+              && animations.get(i).type != Animations.AnimateTypes.DISAPPEAR) {
+        animationString.append(animations.get(i).toString());
+        if (i != (animations.size() - 1)) {
+          animationString.append("\n");
+        }
       }
     }
     return shapesString.append(animationString).toString();

@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Animations implements IAnimations {
   protected AnimatedShape changedShape;
-  protected AnimateTypes type;
+  public AnimateTypes type;
   protected Integer time1;
   protected Integer time2;
   protected RGB color1;
@@ -139,7 +139,7 @@ public class Animations implements IAnimations {
         newString.append(" is still at position ");
         newString.append(position1.toString());
         break;
-        
+
       default:
         throw new IllegalArgumentException("Operation type not found.");
     }
