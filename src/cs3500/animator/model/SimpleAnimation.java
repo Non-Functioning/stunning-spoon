@@ -75,9 +75,7 @@ public class SimpleAnimation implements SimpleAnimationModel {
     // ADDS IN THE APPEAR AND DISAPPEAR TIMES
 
     addNewAnimInTimeOrder(new ShapeAppears(shape1, time1, time2));
-    addNewAnimToTimeline(new ShapeAppears(shape1, time1, time2));
     addNewAnimInTimeOrder(new ShapeDisappears(shape1, time2));
-    addNewAnimToTimeline(new ShapeDisappears(shape1, time2));
     updateBeginAnimaPositions();
     updateBeginAnimaColors();
     updateBeginAnimaSizes();

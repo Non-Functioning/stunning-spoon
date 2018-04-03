@@ -227,7 +227,7 @@ public class AnimationViewTests {
 
   @Test
   public void testVisual() throws IOException, InterruptedException {
-    String[] args = {"-if", "smalldemo.txt", "-iv", "visual", "-o", "out", "-speed", "10"};
+    String[] args = {"-if", "buildings.txt", "-iv", "visual", "-o", "out", "-speed", "10"};
     EasyAnimator.main(args);
     Thread.sleep(30000);
   }
