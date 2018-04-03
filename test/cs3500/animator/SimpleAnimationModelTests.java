@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import cs3500.animator.model.AnimatedShape;
 import cs3500.animator.model.Animations;
 import cs3500.animator.model.Position2D;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class SimpleAnimationModelTests {
   @Test
   public void animatedShapeToStringTest() {
-    RGB color1 = new RGB(0.0,1.0,0.0);
+    RGB color1 = new RGB(0.0, 1.0, 0.0);
     Position2D initial = new Position2D(10.0, 4.0);
     List<Double> params = new ArrayList<>();
     params.add(6.0);
@@ -31,7 +32,7 @@ public class SimpleAnimationModelTests {
   @Test
   public void createShapeTest() {
     SimpleAnimation anime = new SimpleAnimation();
-    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0,0.0,1.0),
+    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0, 0.0, 1.0),
             new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
     assertEquals("Name: My Shape\nType: circle\nCenter: (573.0, 42.2), Radius: "
             + "5.0, Color: (0.0, 0.0, 1.0)\nAppears at t=0\n"
@@ -41,13 +42,18 @@ public class SimpleAnimationModelTests {
   @Test
   public void moveShapeTest() {
     SimpleAnimation anime = new SimpleAnimation();
-    anime.createShape("R", AnimatedShape.ShapeType.SQUARE, new RGB(0.0,0.0,1.0),
+    anime.createShape("R", AnimatedShape.ShapeType.SQUARE, new RGB(0.0, 0.0, 1.0),
             new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
     anime.moveShape(anime.getShape(0), new Position2D(10.0, 20.0), 10, 20);
-    assertEquals("Shapes:\nName: R\nType: square\nMin-corner: (573.0, 42.2),"
-            + " Side length: 5.0, Color: (0.0, 0.0, 1.0)\nAppears at t=0\n"
-            + "Disappears at t=50\n\nShape R moves from (573.0, 42.2) to (10.0, "
-            + "20.0) from t=10 to t=20", anime.printAnimation());
+    assertEquals("Shapes:\n" +
+            "Name: R\n" +
+            "Type: square\n" +
+            "Min-corner: (573.0, 42.2), Side length: 5.0, Color: (0.0, 0.0, 1.0)\n" +
+            "Appears at t=0\n" +
+            "Disappears at t=50\n" +
+            "\n" +
+            "Shape R moves from (573.0, 42.2) to (10.0, 20.0) from t=10 to t=20\n",
+            anime.printAnimation());
   }
 
   @Test
@@ -59,13 +65,18 @@ public class SimpleAnimationModelTests {
     List<Double> newSize = new ArrayList<>();
     newSize.add(10.0);
     newSize.add(15.0);
-    anime.createShape("R", AnimatedShape.ShapeType.OVAL, new RGB(1.0,0.0,0.0),
+    anime.createShape("R", AnimatedShape.ShapeType.OVAL, new RGB(1.0, 0.0, 0.0),
             new Position2D(573.04, 42.2493), size, 0, 50);
     anime.changeShapeSize(anime.getShape(0), newSize, 10, 25);
-    assertEquals("Shapes:\nName: R\nType: oval\nCenter: (573.0, 42.2), X radius: 4.0, "
-            + "Y radius: 9.0, Color: (1.0, 0.0, 0.0)\nAppears at t=0\nDisappears "
-            + "at t=50\n\nShape R scales from X radius: 4.0, Y radius: 9.0 to X radius: 10.0, "
-            + "Y radius: 15.0 from t=10 to t=25", anime.printAnimation());
+    assertEquals("Shapes:\n" +
+            "Name: R\n" +
+            "Type: oval\n" +
+            "Center: (573.0, 42.2), X radius: 4.0, Y radius: 9.0, Color: (1.0, 0.0, 0.0)\n" +
+            "Appears at t=0\n" +
+            "Disappears at t=50\n" +
+            "\n" +
+            "Shape R scales from X radius: 4.0, Y radius: 9.0 to X radius: 10.0, Y radius: 15.0 " +
+            "from t=10 to t=25\n", anime.printAnimation());
   }
 
   @Test
@@ -78,17 +89,23 @@ public class SimpleAnimationModelTests {
     anime.createShape("B", AnimatedShape.ShapeType.POLYGON, new RGB(0.5, 0.5, 0.5),
             new Position2D(1000, 5000), size, 150, 250);
     anime.changeShapeColor(anime.getShape(0), new RGB(0.75, 0.0, 0.5), 200, 201);
-    assertEquals("Shapes:\nName: B\nType: polygon\nCenter: (1000.0, 5000.0), Side 1"
-            + " length: 100.0048, Side 2 length: 492.2, Side 3 length: 400.99, Color: (0.5,"
-            + " 0.5, 0.5)\nAppears at t=150\nDisappears at t=250\n\nShape B changes "
-            + "color from (0.5, 0.5, 0.5) to (0.8, 0.0, 0.5) from t=200 to t=201",
+    assertEquals("Shapes:\n" +
+                    "Name: B\n" +
+                    "Type: polygon\n" +
+                    "Center: (1000.0, 5000.0), Side 1 length: 100.0048, Side 2 length: 492.2, " +
+                    "Side 3 length: 400.99, Color: (0.5, 0.5, 0.5)\n" +
+                    "Appears at t=150\n" +
+                    "Disappears at t=250\n" +
+                    "\n" +
+                    "Shape B changes color from (0.5, 0.5, 0.5) to (0.8, 0.0, 0.5) from t=200 " +
+                    "to t=201\n",
             anime.printAnimation());
   }
 
   @Test
   public void createMultipleShapesNoAnimationsTest() {
     SimpleAnimation anime = new SimpleAnimation();
-    RGB color1 = new RGB(0.0,1.0,0.0);
+    RGB color1 = new RGB(0.0, 1.0, 0.0);
     Position2D initial = new Position2D(10.0, 4.0);
     List<Double> params = new ArrayList<>();
     params.add(6.0);
@@ -102,23 +119,40 @@ public class SimpleAnimationModelTests {
     size2.add(50.0);
     size2.add(25.0);
     size2.add(30.0);
-    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params,10,100);
+    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params, 10, 100);
     anime.createShape("B", AnimatedShape.ShapeType.POLYGON, new RGB(0.5, 0.5, 0.5),
             new Position2D(1000, 5000), size1, 0, 70);
-    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0,0.0,1.0),
+    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0, 0.0, 1.0),
             new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
     anime.createShape("Hi", AnimatedShape.ShapeType.POLYGON, new RGB(0.5, 0.0, 0.5),
             new Position2D(10, 19), size2, 5, 110);
-    assertEquals("Shapes:\nName: My Shape\nType: circle\nCenter: (573.0, 42.2), Radius: "
-            + "5.0, Color: (0.0, 0.0, 1.0)\nAppears at t=0\nDisappears at t=50\n\n"
-            + "Name: B\nType: polygon\nCenter: (1000.0, 5000.0), Side 1 length: 50.0, "
-            + "Side 2 length: 50.0, Side 3 length: 75.0, Color: (0.5, 0.5, 0.5)\n"
-            + "Appears at t=0\nDisappears at t=70\n\nName: Hi\nType: polygon\nCenter: (10.0, "
-            + "19.0), Side 1 length: 100.0, Side 2 length: 50.0, Side 3 length: 25.0, Side 4 "
-            + "length: 30.0, Color: (0.5, 0.0, 0.5)\nAppears at t=5\nDisappears "
-            + "at t=110\n\nName: Shape1\nType: rectangle\nMin-corner: (10.0, 4.0)"
-            + ", Width: 6.0, Height: 8.0, Color: (0.0, 1.0, 0.0)\nAppears at "
-            + "t=10\nDisappears at t=100\n\n", anime.printAnimation());
+    assertEquals("Shapes:\n" +
+            "Name: Shape1\n" +
+            "Type: rectangle\n" +
+            "Min-corner: (10.0, 4.0), Width: 6.0, Height: 8.0, Color: (0.0, 1.0, 0.0)\n" +
+            "Appears at t=10\n" +
+            "Disappears at t=100\n" +
+            "\n" +
+            "Name: B\n" +
+            "Type: polygon\n" +
+            "Center: (1000.0, 5000.0), Side 1 length: 50.0, Side 2 length: 50.0, Side 3 length: " +
+            "75.0, Color: (0.5, 0.5, 0.5)\n" +
+            "Appears at t=0\n" +
+            "Disappears at t=70\n" +
+            "\n" +
+            "Name: My Shape\n" +
+            "Type: circle\n" +
+            "Center: (573.0, 42.2), Radius: 5.0, Color: (0.0, 0.0, 1.0)\n" +
+            "Appears at t=0\n" +
+            "Disappears at t=50\n" +
+            "\n" +
+            "Name: Hi\n" +
+            "Type: polygon\n" +
+            "Center: (10.0, 19.0), Side 1 length: 100.0, Side 2 length: 50.0, Side 3 length: " +
+            "25.0, Side 4 length: 30.0, Color: (0.5, 0.0, 0.5)\n" +
+            "Appears at t=5\n" +
+            "Disappears at t=110\n" +
+            "\n", anime.printAnimation());
   }
 
   @Test
@@ -147,7 +181,7 @@ public class SimpleAnimationModelTests {
   @Test
   public void createMultipleShapesMultipleAnimationsTest() {
     SimpleAnimation anime = new SimpleAnimation();
-    RGB color1 = new RGB(0.0,1.0,0.0);
+    RGB color1 = new RGB(0.0, 1.0, 0.0);
     Position2D initial = new Position2D(10.0, 4.0);
     List<Double> params = new ArrayList<>();
     params.add(6.0);
@@ -157,8 +191,8 @@ public class SimpleAnimationModelTests {
     size1.add(50.0);
     size1.add(75.0);
 
-    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params,10,100);
-    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0,0.0,1.0),
+    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params, 10, 100);
+    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0, 0.0, 1.0),
             new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
     anime.createShape("B", AnimatedShape.ShapeType.POLYGON, new RGB(0.5, 0.5, 0.5),
             new Position2D(1000, 5000), size1, 5, 70);
@@ -185,15 +219,15 @@ public class SimpleAnimationModelTests {
   @Test
   public void removeShapeTest() {
     SimpleAnimation anime = new SimpleAnimation();
-    RGB color1 = new RGB(0.0,1.0,0.0);
+    RGB color1 = new RGB(0.0, 1.0, 0.0);
     Position2D initial = new Position2D(10.0, 4.0);
     List<Double> params = new ArrayList<>();
     params.add(6.0);
     params.add(8.0);
-    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params,10,100);
-    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0,0.0,1.0),
+    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params, 10, 100);
+    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0, 0.0, 1.0),
             new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
-    anime.removeShape(1);
+    anime.removeShape(0);
     assertEquals("Name: My Shape\nType: circle\nCenter: (573.0, 42.2), Radius: "
             + "5.0, Color: (0.0, 0.0, 1.0)\nAppears at t=0\n"
             + "Disappears at t=50", anime.getShape(0).toString());
@@ -202,7 +236,7 @@ public class SimpleAnimationModelTests {
   @Test
   public void removeAnimationTest() {
     SimpleAnimation anime = new SimpleAnimation();
-    RGB color1 = new RGB(0.0,1.0,0.0);
+    RGB color1 = new RGB(0.0, 1.0, 0.0);
     Position2D initial = new Position2D(10.0, 4.0);
     List<Double> params = new ArrayList<>();
     params.add(6.0);
@@ -212,8 +246,8 @@ public class SimpleAnimationModelTests {
     size1.add(50.0);
     size1.add(75.0);
 
-    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params,10,100);
-    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0,0.0,1.0),
+    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params, 10, 100);
+    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0, 0.0, 1.0),
             new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
     anime.createShape("B", AnimatedShape.ShapeType.POLYGON, new RGB(0.5, 0.5, 0.5),
             new Position2D(1000, 5000), size1, 5, 70);
@@ -226,7 +260,7 @@ public class SimpleAnimationModelTests {
     assertEquals(false, testString2.contains(testString1));
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void invalidPolygonTest() {
     SimpleAnimation anime = new SimpleAnimation();
     List<Double> size = new ArrayList<>();
@@ -238,7 +272,7 @@ public class SimpleAnimationModelTests {
             new Position2D(10, 19), size, 0, 10);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void invalidAnimationTimesTest() {
     SimpleAnimation anime = new SimpleAnimation();
     List<Double> size = new ArrayList<>();
@@ -252,7 +286,7 @@ public class SimpleAnimationModelTests {
     anime.changeShapeSize(anime.getShape(0), newSize, 240, 260);
   }
 
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void overlappingAnimationsTest() {
     SimpleAnimation anime = new SimpleAnimation();
     List<Double> size = new ArrayList<>();
