@@ -46,19 +46,6 @@ public class SimpleAnimation implements SimpleAnimationModel {
   public void createShape(String name, AnimatedShape.ShapeType type, RGB color1,
                           Position2D initial, List<Double> params, Integer time1, Integer time2) {
     AnimatedShape shape1 = new AnimatedShape(name, type, color1, initial, params, time1, time2);
-    /*int shapeCount = shapes.size();
-    if (shapes.isEmpty()) {
-      shapes.add(shape1);
-    } else {
-      for (int i = 0; i < shapeCount; i++) {
-        if (shape1.getAppearTime() <= shapes.get(i).getAppearTime()) {
-          shapes.add(i, shape1);
-          break;
-        } else if (i == (shapeCount - 1)) {
-          shapes.add(shape1);
-        }
-      }
-    }*/
     shapes.add(shape1);
 
     if (timeline.size() < time2) {
@@ -76,11 +63,12 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(new ShapeAppears(shape1, time1, time2));
     addNewAnimInTimeOrder(new ShapeDisappears(shape1, time2));
-    //updateBeginAnimaPositions();
-    //updateBeginAnimaColors();
-    //updateBeginAnimaSizes();
   }
 
+  /**
+   * Copies a given shape and adds in into the model.
+   * @param shape   shape to copy
+   */
   @Override
   public void copyShape(AnimatedShape shape) {
     createShape(shape.getShapeName(), shape.getShapeType(), shape.getInitialColor(),
@@ -88,6 +76,10 @@ public class SimpleAnimation implements SimpleAnimationModel {
             shape.getDisappearTime());
   }
 
+  /**
+   * Copies a given animation and adds in into the model.
+   * @param animate   animation to copy
+   */
   @Override
   public void copyAnimation(Animations animate) {
     if (getShapeByName(animate.getChangedShape().getShapeName()) != null) {
@@ -113,6 +105,11 @@ public class SimpleAnimation implements SimpleAnimationModel {
     return animatedShape;
   }
 
+  /**
+   * This returns a shape with a name that matches the given name
+   * @param name    shape name
+   * @return        shape with shape name
+   */
   @Override
   public AnimatedShape getShapeByName(String name) {
     for (int i = 0; i < shapes.size(); i++) {
@@ -123,11 +120,19 @@ public class SimpleAnimation implements SimpleAnimationModel {
     return null;
   }
 
+  /**
+   * Gets the list of shapes.
+   * @return  shape list
+   */
   @Override
   public List<AnimatedShape> getShapes() {
     return this.shapes;
   }
 
+  /**
+   * Gets the list of animations.
+   * @return  animation list
+   */
   @Override
   public List<Animations> getAnimations() {
     updateBeginAnimaPositions();
@@ -136,6 +141,10 @@ public class SimpleAnimation implements SimpleAnimationModel {
     return this.animations;
   }
 
+  /**
+   * Gets the timeline list.
+   * @return  timeline
+   */
   @Override
   public List<List<Animations>> getTimeline() {
     updateBeginAnimaPositions();
@@ -164,9 +173,6 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(move);
     addNewAnimToTimeline(move);
-    //updateBeginAnimaPositions();
-    //updateBeginAnimaColors();
-    //updateBeginAnimaSizes();
   }
 
   /**
@@ -189,9 +195,6 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(colorChange);
     addNewAnimToTimeline(colorChange);
-    //updateBeginAnimaPositions();
-    //updateBeginAnimaColors();
-    //updateBeginAnimaSizes();
   }
 
   /**
@@ -214,9 +217,6 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(sizeChange);
     addNewAnimToTimeline(sizeChange);
-    //updateBeginAnimaPositions();
-    //updateBeginAnimaColors();
-    //updateBeginAnimaSizes();
   }
 
   /**

@@ -4,21 +4,37 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
-import cs3500.animator.model.SimpleAnimation;
 import cs3500.animator.model.SimpleAnimationModel;
 import cs3500.animator.view.ViewInterface;
 
+/**
+ * This class represents the controller for the SimpleAnimation model and view.
+ * This controller is interacts with the interactive view to communicate
+ * the user's input so that the view can respond accordingly.
+ */
 public class Controller implements IController {
   private SimpleAnimationModel model;
   private ViewInterface view;
   String out;
 
+  /**
+   * Constructor for the controller that takes in a model and a view.
+   * @param m   model
+   * @param v   view
+   */
   public Controller(SimpleAnimationModel m, ViewInterface v) {
     model = m;
     view = v;
     view.setListener(this);
   }
 
+  /**
+   * A second constructor for the controller. This also takes in a model and
+   * a view but it also takes in a file name to send a svg file to.
+   * @param m   model
+   * @param v   view
+   * @param out output file name
+   */
   public Controller(SimpleAnimationModel m, ViewInterface v, String out) {
     model = m;
     view = v;
@@ -26,6 +42,13 @@ public class Controller implements IController {
     view.setListener(this);
   }
 
+  /**
+   * This is the action class that reads the user's input or actions with the
+   * interactive view. Depending on the action, it calls upon the view to respond
+   * accordingly to the action. Some actions included are play/pause, restart, and
+   * increase/decrease tempo.
+   * @param e   user's action
+   */
   @Override
   public void action(ActionEvent e) {
     switch (e.getActionCommand()) {

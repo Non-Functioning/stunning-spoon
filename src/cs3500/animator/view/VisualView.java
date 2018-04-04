@@ -26,7 +26,8 @@ public class VisualView extends AbstractVisualView {
    * This method is used only by the Interactive view. It assigns the tempo to the new
    * given value, updates the the tempo shown in the view, and continues running or pausing
    * the animation at the current tick.
-   * @param newTempo  new tempo
+   *
+   * @param newTempo new tempo
    */
   @Override
   public void updateTempo(double newTempo) {
@@ -34,8 +35,8 @@ public class VisualView extends AbstractVisualView {
   }
 
   /**
-   * This method is only used by the Interactive view. It toggles the pause function of the
-   * animation. When unpausing/playing, the animation continues playing from the tick it was
+   * This method is only used by the Interactive view. It plays a paused animation.
+   * When unpausing/playing, the animation continues playing from the tick it was
    * paused at.
    */
   @Override
@@ -45,7 +46,7 @@ public class VisualView extends AbstractVisualView {
 
   /**
    * This method is only used by the Interactive view. It toggles the play/pause
-   * function and updates the view the state whether the animation can be played
+   * function and updates the view to state whether the animation can be played
    * or paused
    */
   @Override
@@ -62,7 +63,6 @@ public class VisualView extends AbstractVisualView {
   public void setListener(IController listener) {
     throw new UnsupportedOperationException("This view does not support listeners.");
   }
-
 
   /**
    * This method is only used by the Interactive view. It toggles the loop function of the
@@ -82,6 +82,10 @@ public class VisualView extends AbstractVisualView {
     throw new UnsupportedOperationException("This view does not support animation restart.");
   }
 
+  /**
+   * This method exports the model into the specified SVG file.
+   * @param fileName  SVG file name
+   */
   @Override
   public void svgAnimation(String fileName) {
     throw new UnsupportedOperationException("This view does not support exporting to svg files.");
@@ -97,6 +101,10 @@ public class VisualView extends AbstractVisualView {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
+  /**
+   * This method opens a dialog box that displays the list of shapes currently
+   * in the subset. It also includes a description of how to remove shapes.
+   */
   @Override
   public void showSubsetList() {
     throw new UnsupportedOperationException("This view does not support subset animations.");
@@ -112,11 +120,21 @@ public class VisualView extends AbstractVisualView {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
+  /**
+   * Generates a SVG view based on the subset selected in the interface, saves the file to a user
+   * specified location.
+   *
+   * @param fileName The file name to save the SVG file as.
+   */
   @Override
   public void svgSubset(String fileName) {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
+  /**
+   * This method opens a dialog box with the specified text.
+   * @param dialog  dialop string
+   */
   @Override
   public void createMessageDialog(String dialog) {
     throw new UnsupportedOperationException("This view does not support message dialogs.");

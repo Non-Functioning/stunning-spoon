@@ -15,6 +15,11 @@ import cs3500.animator.model.Animations;
 import cs3500.animator.model.SimpleAnimation;
 import cs3500.animator.model.SimpleAnimationModel;
 
+/**
+ * This class represents the interactive view where a user can choose to
+ * play, pause, restart, loop, change tempo, create subset, and export
+ * animations to a SVG file.
+ */
 public class InteractiveView extends AbstractVisualView {
   private JPanel buttonPane;
   private JPanel mainButtonPanel;
@@ -32,19 +37,18 @@ public class InteractiveView extends AbstractVisualView {
   private JButton svgSubset;
   private JButton svgAnim;
 
-  protected int subsetTick;
   protected List<List<Animations>> subsetTimeline;
   private SimpleAnimationModel subsetModel;
 
   /**
-   * Constructor for an abstract view.
+   * Constructor for an InteractiveView. It creates panels, buttons, and labels
+   * and adds them to the frame.
    *
    * @param animationModel The model to transfer to a view.
    * @param tempo          Speed of the animation, as ticks per second.
    */
   public InteractiveView(SimpleAnimationModel animationModel, double tempo) {
     super(animationModel, tempo);
-    subsetTick = 0;
     subsetTimeline = new ArrayList<>();
     subsetModel = new SimpleAnimation();
 
@@ -109,12 +113,13 @@ public class InteractiveView extends AbstractVisualView {
     mainPanel.add(subsetPanel, BorderLayout.SOUTH);
 
     frame.pack();
-    //mainButtonPanel.setVisible(true);
-    //subsetPanel.setVisible(true);
     frame.validate();
     frame.setVisible(true);
   }
 
+  /**
+   * This method creates a comboBox and adds each shape from the list to it.
+   */
   private void createShapeDropdown() {
     for (int i = 0; i < shapes.size(); i++) {
       dropdown.addItem("Shape " + shapes.get(i).getShapeName() + " ("
@@ -124,7 +129,7 @@ public class InteractiveView extends AbstractVisualView {
 
   /**
    * This method is only used by the Interactive view. It toggles the play/pause
-   * function and updates the view the state whether the animation can be played
+   * function and updates the view to state whether the animation can be played
    * or paused
    */
   public void togglePlayOrPause() {
@@ -187,8 +192,8 @@ public class InteractiveView extends AbstractVisualView {
   }
 
   /**
-   * This method is only used by the Interactive view. It toggles the pause function of the
-   * animation. When unpausing/playing, the animation continues playing from the tick it was
+   * This method is only used by the Interactive view. It plays a paused animation.
+   * When unpausing/playing, the animation continues playing from the tick it was
    * paused at.
    */
   @Override
@@ -207,6 +212,10 @@ public class InteractiveView extends AbstractVisualView {
     scheduleTimerTasks(task, currTick);
   }
 
+  /**
+   * This method exports the model into the specified SVG file.
+   * @param fileName  SVG file name
+   */
   @Override
   public void svgAnimation(String fileName) {
     ViewInterface vi = new SVGView(model, this.tempo, fileName);
@@ -244,31 +253,21 @@ public class InteractiveView extends AbstractVisualView {
   @Override
   public void playSubset(int subsetStart) {
     subsetTimeline = subsetModel.getTimeline();
-    //subsetTick = subsetStart;
-
     timer.cancel();
     timer = new Timer();
     TimerTask task;
 
     for (int i = 0; i < 101; i++) {
-      final int FINALI = i;//subsetTick;
-      //List<Animations> animationTime = subsetTimeline.get(FINALI);
-
+      final int FINALI = i;
       task = new TimerTask() {
         @Override
         public void run() {
           initializeParams();
           addShapeParamsAtTimeT(subsetTimeline.get(FINALI), FINALI, subsetTimeline);
           mainPanel.repaint();
-          //subsetTick = (subsetTick + 1) % subsetTimeline.size();
         }
       };
       scheduleTimerTasks(task, i);
-      /*if ((subsetTick == (subsetTimeline.size() - 1)) & (!isLooped)) {
-        subsetTick = (subsetTick + 1) % subsetTimeline.size();
-        break;
-      }*/
-      //subsetTick = (subsetTick + 1) % subsetTimeline.size();
     }
   }
 
@@ -283,6 +282,10 @@ public class InteractiveView extends AbstractVisualView {
     ViewInterface vi = new SVGView(subsetModel, this.tempo, fileName);
   }
 
+  /**
+   * This method opens a dialog box that displays the list of shapes currently
+   * in the subset. It also includes a description of how to remove shapes.
+   */
   @Override
   public void showSubsetList() {
     StringBuilder subsetShapes = new StringBuilder("Shapes currently in the subset: \n");
@@ -297,6 +300,10 @@ public class InteractiveView extends AbstractVisualView {
     JOptionPane.showMessageDialog(frame, subsetShapes.toString());
   }
 
+  /**
+   * This method opens a dialog box with the specified text.
+   * @param dialog  dialop string
+   */
   @Override
   public void createMessageDialog(String dialog) {
     JOptionPane.showMessageDialog(frame, dialog);

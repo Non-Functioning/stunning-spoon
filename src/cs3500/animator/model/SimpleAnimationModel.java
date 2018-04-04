@@ -23,8 +23,16 @@ public interface SimpleAnimationModel {
   void createShape(String name, AnimatedShape.ShapeType type, RGB color1, Position2D initial,
                    List<Double> params, Integer time1, Integer time2);
 
+  /**
+   * Copies a given shape and adds in into the model.
+   * @param shape   shape to copy
+   */
   void copyShape(AnimatedShape shape);
 
+  /**
+   * Copies a given animation and adds in into the model.
+   * @param animate   animation to copy
+   */
   void copyAnimation(Animations animate);
 
   /**
@@ -77,12 +85,29 @@ public interface SimpleAnimationModel {
    */
   AnimatedShape getShape(int shapeIndex);
 
+  /**
+   * This returns a shape with a name that matches the given name
+   * @param name    shape name
+   * @return        shape with shape name
+   */
   AnimatedShape getShapeByName(String name);
 
+  /**
+   * Gets the list of shapes.
+   * @return  shape list
+   */
   List<AnimatedShape> getShapes();
 
+  /**
+   * Gets the list of animations.
+   * @return  animation list
+   */
   List<Animations> getAnimations();
 
+  /**
+   * Gets the timeline list.
+   * @return  timeline
+   */
   List<List<Animations>> getTimeline();
 
   /**

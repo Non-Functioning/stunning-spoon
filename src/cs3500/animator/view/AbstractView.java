@@ -6,8 +6,6 @@ import cs3500.animator.model.SimpleAnimationModel;
 
 import java.util.List;
 
-import javax.swing.*;
-
 /**
  * This class implements the view interface and holds the values that are used
  * and shared by all three view types. This class also extends the JFrame class
