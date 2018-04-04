@@ -63,16 +63,6 @@ public class VisualView extends AbstractVisualView {
     throw new UnsupportedOperationException("This view does not support listeners.");
   }
 
-  /**
-   * This method is only used by the Interactive view. It adds a shape chosen by the user
-   * to the new subset model.
-   * @param shapeName    action by user that includes shape
-   * @param subset  new subset model
-   */
-  @Override
-  public void addToSubset(String shapeName, SimpleAnimationModel subset) {
-    throw new UnsupportedOperationException("This view does not support subset animations.");
-  }
 
   /**
    * This method is only used by the Interactive view. It toggles the loop function of the
@@ -90,6 +80,22 @@ public class VisualView extends AbstractVisualView {
   @Override
   public void restartAnimation() {
     throw new UnsupportedOperationException("This view does not support animation restart.");
+  }
+
+  /**
+   * This method is only used by the Interactive view. It adds a shape chosen by the user
+   * to the new subset model.
+   * @param shapeName    action by user that includes shape
+   * @param subset  new subset model
+   */
+  @Override
+  public void addToSubset(String shapeName, SimpleAnimationModel subset) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
+  }
+
+  @Override
+  public void showSubsetList(SimpleAnimationModel model) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
   /**

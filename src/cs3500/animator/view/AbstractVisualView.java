@@ -74,11 +74,42 @@ public abstract class AbstractVisualView extends AbstractView {
    */
   @Override
   public void startAnimation(int startTime) {
-    if (currTick != 0) {
-      animationPeriod = (long) (timeline.size() - currTick) * 100;
-    }
-    TimerTask task;
+    currTick = startTime;
 
+    //if ((startTime != 0) & (isLooped)) {
+    //  loopFromNonZeroStart(startTime);
+    //}
+   // else {
+      TimerTask task;
+      if ((startTime != 0) & (!isLooped)) {
+        animationPeriod = (long) (timeline.size() - currTick) * 100;
+      }
+      else {
+        animationPeriod = (long) (timeline.size()) * 100;
+      }
+
+      for (int i = 0; i < timeline.size(); i++) {
+        final int FINALI = currTick;
+        List<Animations> animationTime = timeline.get(FINALI);
+
+        task = new TimerTask() {
+          @Override
+          public void run() {
+            initializeParams();
+            addShapeParamsAtTimeT(animationTime, FINALI);
+            mainPanel.repaint();
+            currTick = (currTick + 1) % timeline.size();
+          }
+        };
+        scheduleTimerTasks(task, i);
+
+        currTick = (currTick + 1) % timeline.size();
+      }
+  //  }
+  }
+
+  private void loopFromNonZeroStart(int startTime) {
+    TimerTask task;
     for (int i = 0; i < timeline.size(); i++) {
       final int FINALI = currTick;
       List<Animations> animationTime = timeline.get(FINALI);
@@ -94,17 +125,6 @@ public abstract class AbstractVisualView extends AbstractView {
       };
       scheduleTimerTasks(task, i);
       currTick = (currTick + 1) % timeline.size();
-      if (currTick == (timeline.size() - 1)) {
-        if (!isLooped) {
-          break;
-        }
-        else {
-          timer.cancel();
-          timer = new Timer();
-          startAnimation(0);
-          break;
-        }
-      }
     }
   }
 
@@ -302,6 +322,8 @@ public abstract class AbstractVisualView extends AbstractView {
         drawShape(g, i);
       }
       frame.validate();
+      //frame.pack();
+      frame.setVisible(true);
     }
   }
 }

@@ -25,6 +25,7 @@ public class InteractiveView extends AbstractVisualView {
   private JLabel tempoDisplay;
   private JLabel dropdownDisplay;
   private JComboBox<String> dropdown;
+  private JButton subsetList;
   private JButton playSubset;
   private JButton svgSubset;
 
@@ -81,6 +82,9 @@ public class InteractiveView extends AbstractVisualView {
     dropdown.setActionCommand("add shape to subset");
     createShapeDropdown();
     subsetPanel.add(dropdown);
+    subsetList = new JButton("Subset Shape List");
+    subsetList.setActionCommand("view subset");
+    subsetPanel.add(subsetList);
     playSubset = new JButton("Play Subset");
     playSubset.setActionCommand("play subset");
     subsetPanel.add(playSubset);
@@ -278,6 +282,18 @@ public class InteractiveView extends AbstractVisualView {
     ViewInterface vi = new SVGView(model, this.tempo, fileName);
   }
 
+  @Override
+  public void showSubsetList(SimpleAnimationModel model) {
+    StringBuilder subsetShapes = new StringBuilder("Shapes currently in the subset: \n");
+    for (int i = 0; i < model.getShapes().size(); i++) {
+      subsetShapes.append("Shape ");
+      subsetShapes.append(model.getShape(i).getShapeName());
+      subsetShapes.append(" (" + model.getShape(i).getShapeType());
+      subsetShapes.append(")\n");
+    }
+    JOptionPane.showMessageDialog(frame, subsetShapes.toString());
+  }
+
   /**
    * This method is used to connect the controller(listener) to the Interactive view
    * so that the user can interact with the view.
@@ -298,6 +314,7 @@ public class InteractiveView extends AbstractVisualView {
     downTempo.addActionListener(listen);
     loop.addActionListener(listen);
     dropdown.addActionListener(listen);
+    subsetList.addActionListener(listen);
     playSubset.addActionListener(listen);
     svgSubset.addActionListener(listen);
   }

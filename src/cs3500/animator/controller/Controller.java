@@ -54,6 +54,9 @@ public class Controller implements IController {
           view.addToSubset(item, subsetModel);
         }
         break;
+      case "view subset":
+        view.showSubsetList(subsetModel);
+        break;
       case "play subset":
         view.playSubset(subsetModel, 0);
         break;

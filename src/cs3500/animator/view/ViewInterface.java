@@ -72,6 +72,8 @@ public interface ViewInterface {
    */
   void addToSubset(String shapeName, SimpleAnimationModel subset);
 
+  void showSubsetList(SimpleAnimationModel model);
+
   /**
    * This method is only used by the Interactive view. It plays the subset animation
    * from the given starting tick in the current window.

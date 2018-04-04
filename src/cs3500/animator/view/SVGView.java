@@ -271,17 +271,6 @@ public class SVGView extends AbstractView {
   }
 
   /**
-   * This method is only used by the Interactive view. It adds a shape chosen by the user
-   * to the new subset model.
-   * @param shapeName    action by user that includes shape
-   * @param subset  new subset model
-   */
-  @Override
-  public void addToSubset(String shapeName, SimpleAnimationModel subset) {
-    throw new UnsupportedOperationException("This view does not support subset animations.");
-  }
-
-  /**
    * This method is used only by the Interactive view. It assigns the tempo to the new
    * given value, updates the the tempo shown in the view, and continues running or pausing
    * the animation at the current tick.
@@ -300,6 +289,22 @@ public class SVGView extends AbstractView {
   @Override
   public void togglePlayOrPause() {
     throw new UnsupportedOperationException("This view does not support pausing.");
+  }
+
+  /**
+   * This method is only used by the Interactive view. It adds a shape chosen by the user
+   * to the new subset model.
+   * @param shapeName    action by user that includes shape
+   * @param subset  new subset model
+   */
+  @Override
+  public void addToSubset(String shapeName, SimpleAnimationModel subset) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
+  }
+
+  @Override
+  public void showSubsetList(SimpleAnimationModel model) {
+    throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
   @Override
