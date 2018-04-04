@@ -10,14 +10,12 @@ import cs3500.animator.view.ViewInterface;
 
 public class Controller implements IController {
   private SimpleAnimationModel model;
-  private SimpleAnimationModel subsetModel;
   private ViewInterface view;
   String out;
 
   public Controller(SimpleAnimationModel m, ViewInterface v) {
     model = m;
     view = v;
-    subsetModel = new SimpleAnimation();
     view.setListener(this);
   }
 
@@ -25,7 +23,6 @@ public class Controller implements IController {
     model = m;
     view = v;
     this.out = out;
-    subsetModel = new SimpleAnimation();
     view.setListener(this);
   }
 
@@ -47,25 +44,34 @@ public class Controller implements IController {
       case "loop":
         view.loopAnimation();
         break;
+      case "SVG animation":
+        if (out == null) {
+          out = JOptionPane.showInputDialog("Please enter a file name ending in .xml or " +
+                  " .txt to save the SVG view to.");
+        }
+        view.svgAnimation(out);
+        view.createMessageDialog("SVG view was saved.");
+        break;
       case "add shape to subset":
         if (e.getSource() instanceof JComboBox) {
           JComboBox<String> box = (JComboBox<String>) e.getSource();
           String item = (String) box.getSelectedItem();
-          view.addToSubset(item, subsetModel);
+          view.addToSubset(item);
         }
         break;
       case "view subset":
-        view.showSubsetList(subsetModel);
+        view.showSubsetList();
         break;
       case "play subset":
-        view.playSubset(subsetModel, 0);
+        view.playSubset(0);
         break;
       case "SVG subset":
         if (out == null) {
           out = JOptionPane.showInputDialog("Please enter a file name ending in .xml or " +
                   " .txt to save the SVG view to.");
         }
-        view.svgSubset(subsetModel, out);
+        view.svgSubset(out);
+        view.createMessageDialog("SVG view of the subset was saved.");
         break;
       default:
         throw new IllegalArgumentException("Invalid action command");

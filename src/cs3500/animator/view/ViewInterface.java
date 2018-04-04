@@ -64,25 +64,25 @@ public interface ViewInterface {
    */
   void togglePlayOrPause();
 
+  void svgAnimation(String fileName);
+
   /**
    * This method is only used by the Interactive view. It adds a shape chosen by the user
    * to the new subset model.
    * @param shapeName    action by user that includes shape
-   * @param subset  new subset model
    */
-  void addToSubset(String shapeName, SimpleAnimationModel subset);
+  void addToSubset(String shapeName);
 
-  void showSubsetList(SimpleAnimationModel model);
+  void showSubsetList();
 
   /**
    * This method is only used by the Interactive view. It plays the subset animation
    * from the given starting tick in the current window.
-   * @param model       subset model
    * @param subsetStart starting tick
    */
-  void playSubset(SimpleAnimationModel model, int subsetStart);
+  void playSubset(int subsetStart);
 
-  void svgSubset(SimpleAnimationModel model, String fileName);
+  void svgSubset(String fileName);
 
   void createMessageDialog(String dialog);
 

@@ -82,35 +82,38 @@ public class VisualView extends AbstractVisualView {
     throw new UnsupportedOperationException("This view does not support animation restart.");
   }
 
+  @Override
+  public void svgAnimation(String fileName) {
+    throw new UnsupportedOperationException("This view does not support exporting to svg files.");
+  }
+
   /**
    * This method is only used by the Interactive view. It adds a shape chosen by the user
    * to the new subset model.
    * @param shapeName    action by user that includes shape
-   * @param subset  new subset model
    */
   @Override
-  public void addToSubset(String shapeName, SimpleAnimationModel subset) {
+  public void addToSubset(String shapeName) {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
   @Override
-  public void showSubsetList(SimpleAnimationModel model) {
+  public void showSubsetList() {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
   /**
    * This method is only used by the Interactive view. It plays the subset animation
    * from the given starting tick in the current window.
-   * @param model       subset model
    * @param subsetStart starting tick
    */
   @Override
-  public void playSubset(SimpleAnimationModel model, int subsetStart) {
+  public void playSubset(int subsetStart) {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 
   @Override
-  public void svgSubset(SimpleAnimationModel model, String fileName) {
+  public void svgSubset(String fileName) {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
 

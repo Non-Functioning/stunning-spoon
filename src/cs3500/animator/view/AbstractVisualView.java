@@ -23,8 +23,6 @@ public abstract class AbstractVisualView extends AbstractView {
   private Long animationPeriod;
   protected Timer timer;
   protected int currTick;
-  protected int subsetTick;
-  protected List<List<Animations>> subsetTimeline;
   protected boolean isPaused;
 
   protected JFrame frame;
@@ -45,21 +43,19 @@ public abstract class AbstractVisualView extends AbstractView {
     isLooped = false;
     isPaused = true;
     currTick = 0;
-    subsetTick = 0;
-    subsetTimeline = new ArrayList<>();
 
     frame = new JFrame("Simple Animation!");
     //frame.setSize(500, 500);
     frame.setLocation(200, 25);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(true);
-    frame.setPreferredSize(new Dimension(800, 600));
+    frame.setPreferredSize(new Dimension(1000, 600));
     frame.setLayout(new BorderLayout());
     //frame.setVisible(true);
 
     drawingPanel = new DrawingPane();
     drawingScollPane = new JScrollPane(drawingPanel);
-    drawingScollPane.setPreferredSize(new Dimension(800, 400));
+    drawingScollPane.setPreferredSize(new Dimension(1000, 600));
 
     mainPanel = new JPanel(new BorderLayout());
     mainPanel.add(drawingScollPane, BorderLayout.CENTER);
@@ -79,14 +75,7 @@ public abstract class AbstractVisualView extends AbstractView {
   @Override
   public void startAnimation(int startTime) {
     currTick = startTime;
-
     TimerTask task;
-    /*if ((startTime != 0) & (!isLooped)) {
-      animationPeriod = (long) (timeline.size() - currTick) * 100;
-    }
-    else {
-      animationPeriod = (long) (timeline.size()) * 100;
-    }*/
 
     for (int i = 0; i < timeline.size(); i++) {
       final int FINALI = currTick;
@@ -233,6 +222,31 @@ public abstract class AbstractVisualView extends AbstractView {
 
   protected void addShapeParamsAtTimeT(List<Animations> animationTime, int timelineIndex) {
     for (int j = 0; j < timeline.get(timelineIndex).size(); j++) {
+      String nextShape = "";
+
+      shapeType.add(animationTime.get(j).getChangedShape().getShapeType());
+      singleAnimationChange(animationTime.get(j), timelineIndex);
+
+      if ((j + 1) < animationTime.size()) {
+        nextShape = animationTime.get(j + 1).getChangedShape().getShapeName();
+      }
+
+      while (nextShape.equals(animationTime.get(j).getChangedShape().getShapeName())) {
+        singleAnimationChange(animationTime.get(j + 1), timelineIndex);
+        j++;
+        if ((j + 1) < animationTime.size()) {
+          nextShape = animationTime.get(j + 1).getChangedShape().getShapeName();
+        } else {
+          nextShape = "";
+        }
+      }
+      addRemainingShapeParams(animationTime.get(j));
+    }
+  }
+
+  protected void addShapeParamsAtTimeT(List<Animations> animationTime, int timelineIndex,
+                                       List<List<Animations>> subsetTimeline) {
+    for (int j = 0; j < subsetTimeline.get(timelineIndex).size(); j++) {
       String nextShape = "";
 
       shapeType.add(animationTime.get(j).getChangedShape().getShapeType());
