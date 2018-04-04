@@ -84,6 +84,8 @@ public interface ViewInterface {
 
   void svgSubset(SimpleAnimationModel model, String fileName);
 
+  void createMessageDialog(String dialog);
+
   /**
    * This method is used by both the Visual and Interactive views. It plays an
    * animation starting from the given tick. This method schedules all the tasks required

@@ -92,8 +92,8 @@ public class InteractiveView extends AbstractVisualView {
     svgSubset.setActionCommand("SVG subset");
     subsetPanel.add(svgSubset);
 
-    frame.add(mainButtonPanel, BorderLayout.NORTH);
-    frame.add(subsetPanel, BorderLayout.SOUTH);
+    mainPanel.add(mainButtonPanel, BorderLayout.NORTH);
+    mainPanel.add(subsetPanel, BorderLayout.SOUTH);
 
     frame.pack();
     //mainButtonPanel.setVisible(true);
@@ -292,6 +292,11 @@ public class InteractiveView extends AbstractVisualView {
       subsetShapes.append(")\n");
     }
     JOptionPane.showMessageDialog(frame, subsetShapes.toString());
+  }
+
+  @Override
+  public void createMessageDialog(String dialog) {
+    JOptionPane.showMessageDialog(frame, dialog);
   }
 
   /**

@@ -28,8 +28,9 @@ public abstract class AbstractVisualView extends AbstractView {
   protected boolean isPaused;
 
   protected JFrame frame;
-  protected DrawingPane mainPanel;
-  private JScrollPane mainScrollPane;
+  protected JPanel mainPanel;
+  protected DrawingPane drawingPanel;
+  protected JScrollPane drawingScollPane;
 
   /**
    * Constructor for an abstract view.
@@ -52,14 +53,17 @@ public abstract class AbstractVisualView extends AbstractView {
     frame.setLocation(200, 25);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(true);
-    frame.setPreferredSize(new Dimension(700, 600));
+    frame.setPreferredSize(new Dimension(800, 600));
     frame.setLayout(new BorderLayout());
     //frame.setVisible(true);
 
-    mainPanel = new DrawingPane();
-    mainScrollPane = new JScrollPane(mainPanel);
-    mainScrollPane.setPreferredSize(new Dimension(700, 600));
-    frame.add(mainScrollPane, BorderLayout.CENTER);
+    drawingPanel = new DrawingPane();
+    drawingScollPane = new JScrollPane(drawingPanel);
+    drawingScollPane.setPreferredSize(new Dimension(800, 400));
+
+    mainPanel = new JPanel(new BorderLayout());
+    mainPanel.add(drawingScollPane, BorderLayout.CENTER);
+    frame.add(mainPanel, BorderLayout.CENTER);
     //frame.add(mainPanel, BorderLayout.CENTER);
 
     //frame.pack();
@@ -76,40 +80,14 @@ public abstract class AbstractVisualView extends AbstractView {
   public void startAnimation(int startTime) {
     currTick = startTime;
 
-    //if ((startTime != 0) & (isLooped)) {
-    //  loopFromNonZeroStart(startTime);
-    //}
-   // else {
-      TimerTask task;
-      if ((startTime != 0) & (!isLooped)) {
-        animationPeriod = (long) (timeline.size() - currTick) * 100;
-      }
-      else {
-        animationPeriod = (long) (timeline.size()) * 100;
-      }
-
-      for (int i = 0; i < timeline.size(); i++) {
-        final int FINALI = currTick;
-        List<Animations> animationTime = timeline.get(FINALI);
-
-        task = new TimerTask() {
-          @Override
-          public void run() {
-            initializeParams();
-            addShapeParamsAtTimeT(animationTime, FINALI);
-            mainPanel.repaint();
-            currTick = (currTick + 1) % timeline.size();
-          }
-        };
-        scheduleTimerTasks(task, i);
-
-        currTick = (currTick + 1) % timeline.size();
-      }
-  //  }
-  }
-
-  private void loopFromNonZeroStart(int startTime) {
     TimerTask task;
+    /*if ((startTime != 0) & (!isLooped)) {
+      animationPeriod = (long) (timeline.size() - currTick) * 100;
+    }
+    else {
+      animationPeriod = (long) (timeline.size()) * 100;
+    }*/
+
     for (int i = 0; i < timeline.size(); i++) {
       final int FINALI = currTick;
       List<Animations> animationTime = timeline.get(FINALI);
@@ -119,12 +97,15 @@ public abstract class AbstractVisualView extends AbstractView {
         public void run() {
           initializeParams();
           addShapeParamsAtTimeT(animationTime, FINALI);
-          mainPanel.repaint();
+          drawingPanel.repaint();
           currTick = (currTick + 1) % timeline.size();
         }
       };
       scheduleTimerTasks(task, i);
       currTick = (currTick + 1) % timeline.size();
+      if ((!isLooped) & (currTick == 0) & (startTime != 0)) {
+        break;
+      }
     }
   }
 
@@ -318,12 +299,11 @@ public abstract class AbstractVisualView extends AbstractView {
     @Override
     protected void paintComponent(Graphics g) {
       super.paintComponent(g);
-      for (int i = 0; i < shapeType.size(); i++) {
-        drawShape(g, i);
+      if (shapeType != null) {
+        for (int i = 0; i < shapeType.size(); i++) {
+          drawShape(g, i);
+        }
       }
-      frame.validate();
-      //frame.pack();
-      frame.setVisible(true);
     }
   }
 }

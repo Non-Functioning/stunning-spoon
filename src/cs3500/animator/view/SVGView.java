@@ -316,4 +316,9 @@ public class SVGView extends AbstractView {
   public void svgSubset(SimpleAnimationModel model, String fileName) {
     throw new UnsupportedOperationException("This view does not support subset animations.");
   }
+
+  @Override
+  public void createMessageDialog(String dialog) {
+    throw new UnsupportedOperationException("This view does not support message dialogs.");
+  }
 }
