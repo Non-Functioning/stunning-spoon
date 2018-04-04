@@ -16,9 +16,10 @@ public class VisualView extends AbstractVisualView {
    */
   public VisualView(SimpleAnimationModel animationModel, double tempo) {
     super(animationModel, tempo);
-    startAnimation(0);
+
     frame.pack();
     frame.setVisible(true);
+    startAnimation(0);
   }
 
   /**

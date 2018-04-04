@@ -252,7 +252,7 @@ public class AnimationViewTests {
 
   @Test
   public void testVisual() throws IOException, InterruptedException {
-    String[] args = {"-if", "buildings.txt", "-iv", "visual", "-o", "out", "-speed", "10"};
+    String[] args = {"-if", "big-bang-big-crunch.txt", "-iv", "visual", "-o", "out", "-speed", "40"};
     EasyAnimator.main(args);
     Thread.sleep(30000);
   }
@@ -261,6 +261,6 @@ public class AnimationViewTests {
   public void testInteractive() throws IOException, InterruptedException {
     String[] args = {"-if", "smalldemo.txt", "-iv", "interactive", "-o", "out", "-speed", "10"};
     EasyAnimator.main(args);
-    Thread.sleep(30000);
+    Thread.sleep(300000);
   }
 }

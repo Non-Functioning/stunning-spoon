@@ -76,9 +76,9 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(new ShapeAppears(shape1, time1, time2));
     addNewAnimInTimeOrder(new ShapeDisappears(shape1, time2));
-    updateBeginAnimaPositions();
-    updateBeginAnimaColors();
-    updateBeginAnimaSizes();
+    //updateBeginAnimaPositions();
+    //updateBeginAnimaColors();
+    //updateBeginAnimaSizes();
   }
 
   @Override
@@ -130,11 +130,17 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
   @Override
   public List<Animations> getAnimations() {
+    updateBeginAnimaPositions();
+    updateBeginAnimaColors();
+    updateBeginAnimaSizes();
     return this.animations;
   }
 
   @Override
   public List<List<Animations>> getTimeline() {
+    updateBeginAnimaPositions();
+    updateBeginAnimaColors();
+    updateBeginAnimaSizes();
     return this.timeline;
   }
 
@@ -158,9 +164,9 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(move);
     addNewAnimToTimeline(move);
-    updateBeginAnimaPositions();
-    updateBeginAnimaColors();
-    updateBeginAnimaSizes();
+    //updateBeginAnimaPositions();
+    //updateBeginAnimaColors();
+    //updateBeginAnimaSizes();
   }
 
   /**
@@ -183,9 +189,9 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(colorChange);
     addNewAnimToTimeline(colorChange);
-    updateBeginAnimaPositions();
-    updateBeginAnimaColors();
-    updateBeginAnimaSizes();
+    //updateBeginAnimaPositions();
+    //updateBeginAnimaColors();
+    //updateBeginAnimaSizes();
   }
 
   /**
@@ -208,9 +214,9 @@ public class SimpleAnimation implements SimpleAnimationModel {
 
     addNewAnimInTimeOrder(sizeChange);
     addNewAnimToTimeline(sizeChange);
-    updateBeginAnimaPositions();
-    updateBeginAnimaColors();
-    updateBeginAnimaSizes();
+    //updateBeginAnimaPositions();
+    //updateBeginAnimaColors();
+    //updateBeginAnimaSizes();
   }
 
   /**
@@ -452,22 +458,17 @@ public class SimpleAnimation implements SimpleAnimationModel {
    */
   private void addNewAnimToTimeline(Animations obj) {
     for (int i = obj.getTime1(); i <= obj.getTime2(); i++) {
-      for (int j = 0; j < timeline.get(i).size(); j++) {
-        if (timeline.get(i).get(j).getChangedShape() == obj.getChangedShape()
-                & timeline.get(i).get(j).getType() == Animations.AnimateTypes.STILL) {
-          timeline.get(i).remove(j);
-        }
+      List<Animations> animations1 = timeline.get(i);
+      if (animations1.isEmpty()) {
+        animations1.add(obj);
       }
-      if (timeline.get(i).isEmpty()) {
-        timeline.get(i).add(obj);
-      } else {
-        for (int j = 0; j < timeline.get(i).size(); j++) {
-          if (obj.getChangedShape().getShapeName().compareTo(timeline.get(i).get(j).
-                  getChangedShape().getShapeName()) <= 0) {
-            timeline.get(i).add(j, obj);
-            break;
-          } else if (j == (timeline.get(i).size()) - 1) {
-            timeline.get(i).add(obj);
+      else {
+        for (int j = 0; j < animations1.size(); j++) {
+          if (animations1.get(j).getChangedShape().equals(obj.getChangedShape())) {
+            if (animations1.get(j).getType() == Animations.AnimateTypes.STILL) {
+              animations1.remove(j);
+            }
+            animations1.add(j, obj);
             break;
           }
         }

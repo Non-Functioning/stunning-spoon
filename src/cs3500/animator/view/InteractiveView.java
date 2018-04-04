@@ -39,10 +39,11 @@ public class InteractiveView extends AbstractVisualView {
 
     mainButtonPanel = new JPanel();
     mainButtonPanel.setLayout(new FlowLayout());
+    mainButtonPanel.setBorder(BorderFactory.createBevelBorder(1));
 
     buttonPane = new JPanel();
-    buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-    buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+    buttonPane.setLayout(new FlowLayout());
+    buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
     start = new JButton("Play");
     start.setActionCommand("start");
@@ -63,7 +64,7 @@ public class InteractiveView extends AbstractVisualView {
     mainButtonPanel.add(tempoDisplay, FlowLayout.CENTER);
 
     JPanel radioPanel = new JPanel();
-    radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.PAGE_AXIS));
+    radioPanel.setLayout(new FlowLayout());
 
     loop = new JRadioButton("Enable Looping");
     loop.setActionCommand("loop");
@@ -72,6 +73,7 @@ public class InteractiveView extends AbstractVisualView {
 
     subsetPanel = new JPanel();
     subsetPanel.setLayout(new FlowLayout());
+    subsetPanel.setBorder(BorderFactory.createBevelBorder(1));
 
     dropdownDisplay = new JLabel("Add shapes to new animation");
     subsetPanel.add(dropdownDisplay);
@@ -90,8 +92,9 @@ public class InteractiveView extends AbstractVisualView {
     frame.add(subsetPanel, BorderLayout.SOUTH);
 
     frame.pack();
-    mainButtonPanel.setVisible(true);
-    subsetPanel.setVisible(true);
+    //mainButtonPanel.setVisible(true);
+    //subsetPanel.setVisible(true);
+    frame.validate();
     frame.setVisible(true);
   }
 
@@ -108,14 +111,17 @@ public class InteractiveView extends AbstractVisualView {
    * or paused
    */
   public void togglePlayOrPause() {
-    if (isPaused) {
+    isPaused = !isPaused;
+    timer.cancel();
+    timer = new Timer();
+    if (!isPaused) {
       startAnimation(currTick);
       start.setText("Pause");
-    } else {
+    }
+    else {
       pauseAnimation();
       start.setText("Play");
     }
-    isPaused = !isPaused;
   }
 
   /**
@@ -128,12 +134,13 @@ public class InteractiveView extends AbstractVisualView {
   @Override
   public void updateTempo(double newTempo) {
     tempo = newTempo;
-    tempoDisplay.setText("Tempo: " + tempo);
+    tempoDisplay.setText("Tempo: \n" + tempo);
     timer.cancel();
     timer = new Timer();
     if (isPaused) {
       pauseAnimation();
-    } else {
+    }
+    else {
       startAnimation(currTick);
     }
   }
@@ -149,7 +156,8 @@ public class InteractiveView extends AbstractVisualView {
     timer = new Timer();
     if (isPaused) {
       pauseAnimation();
-    } else {
+    }
+    else {
       startAnimation(currTick);
     }
   }
@@ -174,9 +182,9 @@ public class InteractiveView extends AbstractVisualView {
    */
   @Override
   public void pauseAnimation() {
-    if (isPaused) {
-      startAnimation(currTick);
-    } else {
+    //if (!isPaused) {
+    //  startAnimation(currTick);
+    //} else {
       timer.cancel();
       timer = new Timer();
 
@@ -192,8 +200,8 @@ public class InteractiveView extends AbstractVisualView {
         }
       };
       scheduleTimerTasks(task, currTick);
-      isPaused = true;
-    }
+      //isPaused = true;
+    //}
   }
 
   /**
