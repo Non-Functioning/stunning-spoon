@@ -267,7 +267,7 @@ public class InteractiveView extends AbstractVisualView {
    */
   @Override
   public void svgSubset(SimpleAnimationModel model, String fileName) {
-    ViewInterface vi = new SVGView(model, 20, fileName);
+    ViewInterface vi = new SVGView(model, this.tempo, fileName);
   }
 
   /**
