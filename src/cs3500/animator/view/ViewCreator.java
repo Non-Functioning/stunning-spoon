@@ -40,7 +40,12 @@ public class ViewCreator {
         break;
       case INTERACTIVE:
         ViewInterface view = new InteractiveView(model, tempo);
-        new Controller(model, view);
+        if (output != "out") {
+          new Controller(model, view, output);
+        }
+        else {
+          new Controller(model, view);
+        }
         break;
       default:
         throw new IllegalArgumentException("Invalid view type");

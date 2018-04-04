@@ -12,10 +12,19 @@ public class Controller implements IController {
   private SimpleAnimationModel model;
   private SimpleAnimationModel subsetModel;
   private ViewInterface view;
+  String out;
 
   public Controller(SimpleAnimationModel m, ViewInterface v) {
     model = m;
     view = v;
+    subsetModel = new SimpleAnimation();
+    view.setListener(this);
+  }
+
+  public Controller(SimpleAnimationModel m, ViewInterface v, String out) {
+    model = m;
+    view = v;
+    this.out = out;
     subsetModel = new SimpleAnimation();
     view.setListener(this);
   }
@@ -49,7 +58,10 @@ public class Controller implements IController {
         view.playSubset(subsetModel, 0);
         break;
       case "SVG subset":
-        String out = "";
+        if (out == null) {
+          out = JOptionPane.showInputDialog("Please enter a file name ending in .xml or " +
+                  " .txt to save the SVG view to.");
+        }
         view.svgSubset(subsetModel, out);
         break;
       default:

@@ -90,6 +90,8 @@ public class InteractiveView extends AbstractVisualView {
     frame.add(subsetPanel, BorderLayout.SOUTH);
 
     frame.pack();
+    mainButtonPanel.setVisible(true);
+    subsetPanel.setVisible(true);
     frame.setVisible(true);
   }
 
@@ -283,5 +285,6 @@ public class InteractiveView extends AbstractVisualView {
     loop.addActionListener(listen);
     dropdown.addActionListener(listen);
     playSubset.addActionListener(listen);
+    svgSubset.addActionListener(listen);
   }
 }
