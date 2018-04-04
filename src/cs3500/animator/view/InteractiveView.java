@@ -111,8 +111,7 @@ public class InteractiveView extends AbstractVisualView {
     if (isPaused) {
       startAnimation(currTick);
       start.setText("Pause");
-    }
-    else {
+    } else {
       pauseAnimation();
       start.setText("Play");
     }
@@ -123,7 +122,8 @@ public class InteractiveView extends AbstractVisualView {
    * This method is used only by the Interactive view. It assigns the tempo to the new
    * given value, updates the the tempo shown in the view, and continues running or pausing
    * the animation at the current tick.
-   * @param newTempo  new tempo
+   *
+   * @param newTempo new tempo
    */
   @Override
   public void updateTempo(double newTempo) {
@@ -133,8 +133,7 @@ public class InteractiveView extends AbstractVisualView {
     timer = new Timer();
     if (isPaused) {
       pauseAnimation();
-    }
-    else {
+    } else {
       startAnimation(currTick);
     }
   }
@@ -150,8 +149,7 @@ public class InteractiveView extends AbstractVisualView {
     timer = new Timer();
     if (isPaused) {
       pauseAnimation();
-    }
-    else {
+    } else {
       startAnimation(currTick);
     }
   }
@@ -176,10 +174,9 @@ public class InteractiveView extends AbstractVisualView {
    */
   @Override
   public void pauseAnimation() {
-    if(isPaused) {
+    if (isPaused) {
       startAnimation(currTick);
-    }
-    else {
+    } else {
       timer.cancel();
       timer = new Timer();
 
@@ -202,8 +199,9 @@ public class InteractiveView extends AbstractVisualView {
   /**
    * This method is only used by the Interactive view. It adds a shape chosen by the user
    * to the new subset model.
-   * @param item    added shape's name
-   * @param subset  new subset model
+   *
+   * @param item   added shape's name
+   * @param subset new subset model
    */
   @Override
   public void addToSubset(String item, SimpleAnimationModel subset) {
@@ -216,8 +214,7 @@ public class InteractiveView extends AbstractVisualView {
           subset.copyAnimation(animations.get(i));
         }
       }
-    }
-    else {
+    } else {
       subset.removeShapeByName(shapeName);
       dropdownDisplay.setText("Removed from Subset: " + shapeName);
     }
@@ -226,6 +223,7 @@ public class InteractiveView extends AbstractVisualView {
   /**
    * This method is only used by the Interactive view. It plays the subset animation
    * from the given starting tick in the current window.
+   *
    * @param model       subset model
    * @param subsetStart starting tick
    */
@@ -260,15 +258,23 @@ public class InteractiveView extends AbstractVisualView {
     }
   }
 
+  /**
+   * Generates a SVG view based on the subset selected in the interface, saves the file to a user
+   * specified location.
+   *
+   * @param model    A subset model to pass into the SVG model.
+   * @param fileName The file name to save the SVG file as.
+   */
   @Override
   public void svgSubset(SimpleAnimationModel model, String fileName) {
-
+    ViewInterface vi = new SVGView(model, this.tempo, fileName);
   }
 
   /**
    * This method is used to connect the controller(listener) to the Interactive view
    * so that the user can interact with the view.
-   * @param listener  controller
+   *
+   * @param listener controller
    */
   @Override
   public void setListener(IController listener) {
