@@ -179,44 +179,6 @@ public class SimpleAnimationModelTests {
   }
 
   @Test
-  public void createMultipleShapesMultipleAnimationsTest() {
-    SimpleAnimation anime = new SimpleAnimation();
-    RGB color1 = new RGB(0.0, 1.0, 0.0);
-    Position2D initial = new Position2D(10.0, 4.0);
-    List<Double> params = new ArrayList<>();
-    params.add(6.0);
-    params.add(8.0);
-    List<Double> size1 = new ArrayList<>();
-    size1.add(50.0);
-    size1.add(50.0);
-    size1.add(75.0);
-
-    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params, 10, 100);
-    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0, 0.0, 1.0),
-            new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
-    anime.createShape("B", AnimatedShape.ShapeType.POLYGON, new RGB(0.5, 0.5, 0.5),
-            new Position2D(1000, 5000), size1, 5, 70);
-
-    anime.changeShapeColor(anime.getShape(1), new RGB(1.0, 0.5, 0.0), 10, 50);
-    anime.moveShape(anime.getShape(1), new Position2D(10, 20), 60, 70);
-    anime.moveShape(anime.getShape(2), new Position2D(-10, -15), 25, 90);
-    anime.changeShapeColor(anime.getShape(2), new RGB(1.0, 0.5, 0.0), 45, 75);
-    anime.changeShapeSize(anime.getShape(0), Collections.singletonList(10.0), 10, 40);
-    anime.moveShape(anime.getShape(0), new Position2D(0, 0), 0, 25);
-
-    String testString1 = "Shape B moves from";
-    String testString2 = "Shape B changes color from";
-    String testString3 = "Shape My Shape scales from";
-    String testString4 = "Shape My Shape moves from";
-    String testString5 = "Shape Shape1 moves from";
-    String testString6 = "Shape Shape1 changes color from";
-    String testString7 = anime.printAnimation();
-    assertEquals(true, (testString7.contains(testString1) && testString7.contains(testString2)
-            && testString7.contains(testString3) && testString7.contains(testString4)
-            && testString7.contains(testString5) && testString7.contains(testString6)));
-  }
-
-  @Test
   public void removeShapeTest() {
     SimpleAnimation anime = new SimpleAnimation();
     RGB color1 = new RGB(0.0, 1.0, 0.0);
@@ -231,33 +193,6 @@ public class SimpleAnimationModelTests {
     assertEquals("Name: My Shape\nType: circle\nCenter: (573.0, 42.2), Radius: "
             + "5.0, Color: (0.0, 0.0, 1.0)\nAppears at t=0\n"
             + "Disappears at t=50", anime.getShape(0).toString());
-  }
-
-  @Test
-  public void removeAnimationTest() {
-    SimpleAnimation anime = new SimpleAnimation();
-    RGB color1 = new RGB(0.0, 1.0, 0.0);
-    Position2D initial = new Position2D(10.0, 4.0);
-    List<Double> params = new ArrayList<>();
-    params.add(6.0);
-    params.add(8.0);
-    List<Double> size1 = new ArrayList<>();
-    size1.add(50.0);
-    size1.add(50.0);
-    size1.add(75.0);
-
-    anime.createShape("Shape1", AnimatedShape.ShapeType.RECTANGLE, color1, initial, params, 10, 100);
-    anime.createShape("My Shape", AnimatedShape.ShapeType.CIRCLE, new RGB(0.0, 0.0, 1.0),
-            new Position2D(573.04, 42.2493), Collections.singletonList(5.0), 0, 50);
-    anime.createShape("B", AnimatedShape.ShapeType.POLYGON, new RGB(0.5, 0.5, 0.5),
-            new Position2D(1000, 5000), size1, 5, 70);
-
-    anime.changeShapeColor(anime.getShape(1), new RGB(1.0, 0.5, 0.0), 10, 50);
-    anime.moveShape(anime.getShape(1), new Position2D(10, 20), 60, 70);
-    anime.removeAnimation(anime.getShape(1), Animations.AnimateTypes.MOVE, 65);
-    String testString1 = "Shape B moves from";
-    String testString2 = anime.printAnimation();
-    assertEquals(false, testString2.contains(testString1));
   }
 
   @Test(expected = IllegalArgumentException.class)
