@@ -11,6 +11,7 @@ import cs3500.animator.model.SimpleAnimationModel;
 import cs3500.animator.view.InteractiveView;
 import cs3500.animator.view.ViewInterface;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
@@ -22,6 +23,8 @@ public class ControllerTests {
    */
   @Test
   public void testAction() {
+    boolean result = true;
+
     SimpleAnimationModel model = new SimpleAnimation();
     InteractiveView view = new InteractiveView(model, 20);
     IController controller = new Controller(model, view);
@@ -46,11 +49,11 @@ public class ControllerTests {
       controller.action(playSubset);
       controller.action(svgSubset);
     } catch (IllegalArgumentException e) {
-      assertFalse("false", false);
+      result = false;
     } catch (Throwable t) {
       //do nothing since other exceptions are OK
     }
-    assertTrue("OK", true);
+    assertEquals(true, result);
   }
 
   /**
