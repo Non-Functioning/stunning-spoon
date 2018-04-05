@@ -117,30 +117,30 @@ public class AnimationViewTests {
     assertEquals("<!DOCTYPE html>\n" +
             "<html>\n" +
             "<body>\n" +
-            "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1000\"" +
-            " height=\"1000\">\n" +
-            "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" " +
-            "style=\"fill:RGB(255, 0, 0)\" visibility=\"hidden\">\n" +
-            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" " +
-            "begin=\"0.05s\" dur=\"4.95s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 0.0 L 100.0 100.0\" begin=\"0.5s\" dur=\"2." +
-            "0s\" fill=\"freeze\" />\n" +
-            "<animate attributeName=\"width\" attributeType=\"XML\" begin=\"2.55s\" " +
-            "dur=\"0.95s\" fill=\"freeze\" from=\"50.0\" to=\"25.0\" /> \n" +
-            "<animate attributeName=\"height\" attributeType=\"XML\" begin=\"2.55s\"" +
-            " dur=\"0.95s\" fill=\"freeze\" from=\"100.0\" to=\"100.0\" />\n" +
-            "<animateMotion path=\"M 100.0 100.0 L 0.0 0.0\" begin=\"3.5s\" dur=\"1." +
-            "5s\" fill=\"freeze\" />\n" +
+            "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1000\" heigh" +
+            "t=\"1000\">\n" +
+            "<rect id=\"R\" x=\"200.0\" y=\"200.0\" width=\"50.0\" height=\"100.0\" style=\"" +
+            "fill:RGB(255, 0, 0)\" visibility=\"hidden\">\n" +
+            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" begin=\"" +
+            "0.05s\" dur=\"0.0s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 0.0 L 100.0 100.0\" begin=\"0.5s\" dur=\"2.0s\" fi" +
+            "ll=\"freeze\" />\n" +
+            "<animate attributeName=\"width\" attributeType=\"XML\" begin=\"2.55s\" dur=\"0" +
+            ".95s\" fill=\"freeze\" from=\"50.0\" to=\"25.0\" /> \n" +
+            "<animate attributeName=\"height\" attributeType=\"XML\" begin=\"2.55s\" dur=\"" +
+            "0.95s\" fill=\"freeze\" from=\"100.0\" to=\"100.0\" />\n" +
+            "<animateMotion path=\"M 100.0 100.0 L 0.0 0.0\" begin=\"3.5s\" dur=\"1.5s\" fi" +
+            "ll=\"freeze\" />\n" +
             "</rect>\n" +
 
-            "<ellipse cx=\"500.0\" cy=\"100.0\" rx=\"60.0\" ry=\"30.0\" style=\"fill" +
-            ":RGB(0, 0, 255)\" visibility=\"hidden\">\n" +
-            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" " +
-            "begin=\"0.3s\" dur=\"4.7s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 0.0 L 0.0 300.0\" begin=\"1.0s\" dur=\"2.5s" +
-            "\" fill=\"freeze\" />\n" +
-            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(0, 0, " +
-            "255)\" to=\"RGB(0, 255, 0)\" begin=\"2.5s\" dur=\"1.5s\" fill=\"freeze\" />\n" +
+            "<ellipse cx=\"500.0\" cy=\"100.0\" rx=\"60.0\" ry=\"30.0\" style=\"fill:RGB(0," +
+            " 0, 255)\" visibility=\"hidden\">\n" +
+            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" begin=\"" +
+            "0.3s\" dur=\"0.0s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 0.0 L 0.0 300.0\" begin=\"1.0s\" dur=\"2.5s\" fill" +
+            "=\"freeze\" />\n" +
+            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(0, 0, 255)\" " +
+            "to=\"RGB(0, 255, 0)\" begin=\"2.5s\" dur=\"1.5s\" fill=\"freeze\" />\n" +
             "</ellipse>\n" +
             "</svg>\n" +
             "</body>\n" +
@@ -154,73 +154,74 @@ public class AnimationViewTests {
     assertEquals("<!DOCTYPE html>\n" +
             "<html>\n" +
             "<body>\n" +
-            "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1000\" " +
-            "height=\"1000\">\n" +
-            "<rect id=\"disk1\" x=\"190.0\" y=\"180.0\" width=\"20.0\" height=\"30.0\"" +
-            " style=\"fill:RGB(0, 49, 90)\" visibility=\"hidden\">\n" +
-            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" be" +
-            "gin=\"0.05s\" dur=\"15.05s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 0.0 L 0.0 -130.0\" begin=\"1.25s\" dur=\"0.5s" +
-            "\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 -130.0 L 300.0 -130.0\" begin=\"1.8s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 300.0 -130.0 L 300.0 60.0\" begin=\"2.35s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 300.0 60.0 L 300.0 -130.0\" begin=\"4.45s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 300.0 -130.0 L 150.0 -130.0\" begin=\"5.0s\" dur=" +
-            "\"0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 150.0 -130.0 L 150.0 30.0\" begin=\"5.55s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 150.0 30.0 L 150.0 -130.0\" begin=\"7.65s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 150.0 -130.0 L 0.0 -130.0\" begin=\"8.2s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 -130.0 L 0.0 60.0\" begin=\"8.75s\" dur=\"0.5" +
-            "s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 60.0 L 0.0 -130.0\" begin=\"10.85s\" dur=\"0." +
+            "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"1000\" he" +
+            "ight=\"1000\">\n" +
+            "<rect id=\"disk1\" x=\"190.0\" y=\"180.0\" width=\"20.0\" height=\"30.0\" s" +
+            "tyle=\"fill:RGB(0, 49, 90)\" visibility=\"hidden\">\n" +
+            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" begi" +
+            "n=\"0.05s\" dur=\"0.0s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 0.0 L 0.0 -130.0\" begin=\"1.25s\" dur=\"0.5s\"" +
+            " fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 -130.0 L 300.0 -130.0\" begin=\"1.8s\" dur=\"0." +
             "5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 -130.0 L 300.0 -130.0\" begin=\"11.4s\" dur=\"" +
+            "<animateMotion path=\"M 300.0 -130.0 L 300.0 60.0\" begin=\"2.35s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 300.0 60.0 L 300.0 -130.0\" begin=\"4.45s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 300.0 -130.0 L 150.0 -130.0\" begin=\"5.0s\" dur=\"" +
             "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 300.0 -130.0 L 300.0 0.0\" begin=\"11.95s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(0, 49, 9" +
-            "0)\" to=\"RGB(0, 255, 0)\" begin=\"12.45s\" dur=\"0.4s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 150.0 -130.0 L 150.0 30.0\" begin=\"5.55s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 150.0 30.0 L 150.0 -130.0\" begin=\"7.65s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 150.0 -130.0 L 0.0 -130.0\" begin=\"8.2s\" dur=\"0." +
+            "5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 -130.0 L 0.0 60.0\" begin=\"8.75s\" dur=\"0.5s\"" +
+            " fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 60.0 L 0.0 -130.0\" begin=\"10.85s\" dur=\"0.5s" +
+            "\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 -130.0 L 300.0 -130.0\" begin=\"11.4s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 300.0 -130.0 L 300.0 0.0\" begin=\"11.95s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(0, 49, 90)" +
+            "\" to=\"RGB(0, 255, 0)\" begin=\"12.45s\" dur=\"0.4s\" fill=\"freeze\" />\n" +
             "</rect>\n" +
 
-            "<rect id=\"disk2\" x=\"167.5\" y=\"210.0\" width=\"65.0\" height=\"30.0\"" +
-            " style=\"fill:RGB(6, 247, 41)\" visibility=\"hidden\">\n" +
-            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" be" +
-            "gin=\"0.05s\" dur=\"15.05s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 0.0 L 0.0 -160.0\" begin=\"2.85s\" dur=\"0.5s" +
-            "\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 -160.0 L 150.0 -160.0\" begin=\"3.4s\" dur=\"" +
+            "<rect id=\"disk2\" x=\"167.5\" y=\"210.0\" width=\"65.0\" height=\"30.0\" s" +
+            "tyle=\"fill:RGB(6, 247, 41)\" visibility=\"hidden\">\n" +
+            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" begi" +
+            "n=\"0.05s\" dur=\"0.0s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 0.0 L 0.0 -160.0\" begin=\"2.85s\" dur=\"0.5s\"" +
+            " fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 -160.0 L 150.0 -160.0\" begin=\"3.4s\" dur=\"0." +
+            "5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 150.0 -160.0 L 150.0 30.0\" begin=\"3.95s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 150.0 30.0 L 150.0 -160.0\" begin=\"9.25s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 150.0 -160.0 L 300.0 -160.0\" begin=\"9.8s\" dur=\"" +
             "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 150.0 -160.0 L 150.0 30.0\" begin=\"3.95s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 150.0 30.0 L 150.0 -160.0\" begin=\"9.25s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 150.0 -160.0 L 300.0 -160.0\" begin=\"9.8s\" dur=" +
-            "\"0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 300.0 -160.0 L 300.0 0.0\" begin=\"10.35s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(6, 247, " +
-            "41)\" to=\"RGB(0, 255, 0)\" begin=\"10.85s\" dur=\"0.4s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 300.0 -160.0 L 300.0 0.0\" begin=\"10.35s\" dur=\"0" +
+            ".5s\" fill=\"freeze\" />\n" +
+            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(6, 247, 41" +
+            ")\" to=\"RGB(0, 255, 0)\" begin=\"10.85s\" dur=\"0.4s\" fill=\"freeze\" />\n" +
             "</rect>\n" +
 
-            "<rect id=\"disk3\" x=\"145.0\" y=\"240.0\" width=\"110.0\" height=\"30.0\"" +
-            " style=\"fill:RGB(11, 45, 175)\" visibility=\"hidden\">\n" +
-            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" be" +
-            "gin=\"0.05s\" dur=\"15.05s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 0.0 L 0.0 -190.0\" begin=\"6.05s\" dur=\"0.5s" +
-            "\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 0.0 -190.0 L 300.0 -190.0\" begin=\"6.6s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animateMotion path=\"M 300.0 -190.0 L 300.0 0.0\" begin=\"7.15s\" dur=\"" +
-            "0.5s\" fill=\"freeze\" />\n" +
-            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(11, 45, " +
-            "175)\" to=\"RGB(0, 255, 0)\" begin=\"7.65s\" dur=\"0.4s\" fill=\"freeze\" />\n" +
+            "<rect id=\"disk3\" x=\"145.0\" y=\"240.0\" width=\"110.0\" height=\"30.0\" " +
+            "style=\"fill:RGB(11, 45, 175)\" visibility=\"hidden\">\n" +
+            "<set attributeName=\"visibility\" attributeType=\"CSS\" to=\"visible\" begi" +
+            "n=\"0.05s\" dur=\"0.0s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 0.0 L 0.0 -190.0\" begin=\"6.05s\" dur=\"0.5s\"" +
+            " fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 0.0 -190.0 L 300.0 -190.0\" begin=\"6.6s\" dur=\"0." +
+            "5s\" fill=\"freeze\" />\n" +
+            "<animateMotion path=\"M 300.0 -190.0 L 300.0 0.0\" begin=\"7.15s\" dur=\"0." +
+            "5s\" fill=\"freeze\" />\n" +
+            "<animate attributeName=\"fill\" attributeType=\"CSS\" from=\"RGB(11, 45, 17" +
+            "5)\" to=\"RGB(0, 255, 0)\" begin=\"7.65s\" dur=\"0.4s\" fill=\"freeze\" />\n" +
             "</rect>\n" +
+
             "</svg>\n" +
             "</body>\n" +
             "</html>\n", outContent.toString());
