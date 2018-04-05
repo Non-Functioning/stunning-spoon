@@ -12,6 +12,11 @@ import cs3500.animator.model.AnimatedShape;
 import cs3500.animator.model.Animations;
 import cs3500.animator.model.SimpleAnimationModel;
 
+/**
+ * This class extends the AbstractView class. It holds the methods
+ * in order to create a window or frame and paint on that window. Both
+ * the visual and interactive views extend from this class.
+ */
 public abstract class AbstractVisualView extends AbstractView {
   private List<Float> red;
   private List<Float> green;
@@ -23,8 +28,6 @@ public abstract class AbstractVisualView extends AbstractView {
   private Long animationPeriod;
   protected Timer timer;
   protected int currTick;
-  protected int subsetTick;
-  protected List<List<Animations>> subsetTimeline;
   protected boolean isPaused;
 
   protected JFrame frame;
@@ -45,28 +48,21 @@ public abstract class AbstractVisualView extends AbstractView {
     isLooped = false;
     isPaused = true;
     currTick = 0;
-    subsetTick = 0;
-    subsetTimeline = new ArrayList<>();
 
     frame = new JFrame("Simple Animation!");
-    //frame.setSize(500, 500);
     frame.setLocation(200, 25);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(true);
-    frame.setPreferredSize(new Dimension(800, 600));
+    frame.setPreferredSize(new Dimension(1000, 600));
     frame.setLayout(new BorderLayout());
-    //frame.setVisible(true);
 
     drawingPanel = new DrawingPane();
     drawingScollPane = new JScrollPane(drawingPanel);
-    drawingScollPane.setPreferredSize(new Dimension(800, 400));
+    drawingScollPane.setPreferredSize(new Dimension(1000, 600));
 
     mainPanel = new JPanel(new BorderLayout());
     mainPanel.add(drawingScollPane, BorderLayout.CENTER);
     frame.add(mainPanel, BorderLayout.CENTER);
-    //frame.add(mainPanel, BorderLayout.CENTER);
-
-    //frame.pack();
   }
 
   /**
@@ -79,14 +75,7 @@ public abstract class AbstractVisualView extends AbstractView {
   @Override
   public void startAnimation(int startTime) {
     currTick = startTime;
-
     TimerTask task;
-    /*if ((startTime != 0) & (!isLooped)) {
-      animationPeriod = (long) (timeline.size() - currTick) * 100;
-    }
-    else {
-      animationPeriod = (long) (timeline.size()) * 100;
-    }*/
 
     for (int i = 0; i < timeline.size(); i++) {
       final int FINALI = currTick;
@@ -109,6 +98,10 @@ public abstract class AbstractVisualView extends AbstractView {
     }
   }
 
+  /**
+   * This method initializes the param lists that will be used to
+   * draw shapes.
+   */
   protected void initializeParams() {
     red = new ArrayList<>();
     green = new ArrayList<>();
@@ -231,6 +224,12 @@ public abstract class AbstractVisualView extends AbstractView {
     return (initVal * v1) + (finalVal * v2);
   }
 
+  /**
+   * This method adds the animation's shapes into the shape params lists.
+   * Only the shapes that appear at the given time are added.
+   * @param animationTime   list of animations at time T
+   * @param timelineIndex   time T
+   */
   protected void addShapeParamsAtTimeT(List<Animations> animationTime, int timelineIndex) {
     for (int j = 0; j < timeline.get(timelineIndex).size(); j++) {
       String nextShape = "";
@@ -255,6 +254,44 @@ public abstract class AbstractVisualView extends AbstractView {
     }
   }
 
+  /**
+   * This method also adds the animation's shapes into the shape params lists
+   * but it adds the shapes that are specified in the subset model. Only the
+   * shapes that appear at the given time are added.
+   * @param animationTime   list of animations at time T
+   * @param timelineIndex   time T
+   * @param subsetTimeline  subset's timeline
+   */
+  protected void addShapeParamsAtTimeT(List<Animations> animationTime, int timelineIndex,
+                                       List<List<Animations>> subsetTimeline) {
+    for (int j = 0; j < subsetTimeline.get(timelineIndex).size(); j++) {
+      String nextShape = "";
+
+      shapeType.add(animationTime.get(j).getChangedShape().getShapeType());
+      singleAnimationChange(animationTime.get(j), timelineIndex);
+
+      if ((j + 1) < animationTime.size()) {
+        nextShape = animationTime.get(j + 1).getChangedShape().getShapeName();
+      }
+
+      while (nextShape.equals(animationTime.get(j).getChangedShape().getShapeName())) {
+        singleAnimationChange(animationTime.get(j + 1), timelineIndex);
+        j++;
+        if ((j + 1) < animationTime.size()) {
+          nextShape = animationTime.get(j + 1).getChangedShape().getShapeName();
+        } else {
+          nextShape = "";
+        }
+      }
+      addRemainingShapeParams(animationTime.get(j));
+    }
+  }
+
+  /**
+   * This method is used in the addShapeParamsAtTimeT. It adds the remaining shape
+   * params into the lists that are not changed in the animation.
+   * @param animation   animation being added
+   */
   private void addRemainingShapeParams(Animations animation) {
     int shapeCount = shapeType.size();
     if (red.size() < shapeCount) {
@@ -277,6 +314,12 @@ public abstract class AbstractVisualView extends AbstractView {
     }
   }
 
+  /**
+   * This method schedules painting tasks depending on if the animation
+   * is looped or not.
+   * @param task  task to schedule
+   * @param time  time to schedule to
+   */
   protected void scheduleTimerTasks(TimerTask task, int time) {
     if (isLooped) {
       timer.scheduleAtFixedRate(task, (long) ((time / tempo) * 1000), animationPeriod);
@@ -286,6 +329,11 @@ public abstract class AbstractVisualView extends AbstractView {
     }
   }
 
+  /**
+   * This class represents a panel that can be drawn on to create shapes
+   * at each tick. In this class the paintComponent method is overrode
+   * in order to paint all shapes at each tick.
+   */
   protected class DrawingPane extends JPanel {
     private DrawingPane() {
       setLayout(new BorderLayout());

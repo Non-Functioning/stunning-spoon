@@ -55,9 +55,23 @@ access these animations and fix a bug where the svg had incorrect overlapping sh
 
 The next changes were made to the visual view. Changes were made to the visual view's
 startAnimation method in order to simplify and shorten the code. These changes also fixed a bug in
-the visual view where the shapes would blink when progressing through ticks.
+the visual view where the shapes would blink when progressing through ticks. Another change made
+was to add and draw and JPanels instead of drawing directly onto the JFrame. This made it easier
+to adjust the size and placement of the area drawn on in the JFrame.
 
 Additionally, when adding the interactive view, the AbstractVisualView class was added. This class
 creates the animation window and draws the animation on that window. The visual and interactive
 views now extend off of this class. When creating the interactive view, functionality was added
-for playing/pausing, changing the tempo, and looping the animation.
+for playing/pausing, restarting, changing the tempo, and looping the animation. These functions
+can be done by a user by clicking buttons on the view.
+
+Other functions in the interactive view are creating and viewing a subset of shapes and exporting
+the animations to a specified SVG file. In order to add or remove shapes from a subset, there is a
+dropdown that lists all the shapes in the animation by shape name and shape type. By selecting one,
+the shape is added to the subset and by reselecting it, it is removed from the subset. There is
+also a button that will open a new window and display the list of shapes currently in the subset.
+Next, there is also a button that will play the subset animation in the current window. Lastly,
+there are two buttons for exporting to a SVG file. One exports the subset and the other exports
+the entire animation. If there was a file name specified in the command line, the file will export
+to there. Otherwise, a dialog box will pop up asking for the user to input a file name to export
+the SVG view to.
